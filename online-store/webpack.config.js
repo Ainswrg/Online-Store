@@ -15,10 +15,23 @@ const baseConfig = {
       {
         test: /\.(?:ico|gif|jpg|png|mp4)$/i,
         type: 'asset/resource',
+        generator: {
+          filename: 'assets/images/[name][ext]'
+        },
+      },
+      {
+        test: /\.svg$/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/svg/[hash][ext]',
+        },
       },
       {
         test: /\.(woff(2)?|eot|ttf|otf|)$/i,
         type: 'asset/resource',
+        generator: {
+          filename: 'assets/fonts/[hash][ext]',
+        },
       },
     ],
   },
@@ -27,6 +40,11 @@ const baseConfig = {
   },
   resolve: {
     extensions: ['.ts', '.js'],
+    alias: {
+      '@imgs': path.resolve(__dirname, './src/assets/images'),
+      '@core': path.resolve(__dirname, './src/core'),
+      '@components': path.resolve(__dirname, './src/core/components'),
+    },
   },
   output: {
     filename: 'index.[contenthash].js',

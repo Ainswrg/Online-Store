@@ -23,9 +23,10 @@
     "rules": {
       "prettier/prettier": "warn",
       "no-debugger": "off",
-      "no-console": "warn",
+      "no-console": 1,
       "class-methods-use-this": "off",
       "@typescript-eslint/no-explicit-any": "error",
       "@typescript-eslint/lines-between-class-members": "off",
+      "import/no-dynamic-require": "off"
     }
 }
