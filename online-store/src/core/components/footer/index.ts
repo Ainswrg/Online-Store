@@ -1,4 +1,4 @@
-import Component from '../../templates/components';
+import Component from '../../templates/component';
 import { Url } from '../../ts/enum';
 
 const Links = [

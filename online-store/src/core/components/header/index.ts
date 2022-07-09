@@ -1,4 +1,4 @@
-import Component from '../../templates/components';
+import Component from '../../templates/component';
 import { PageIds } from '../../ts/enum';
 
 const Buttons = [
@@ -27,7 +27,6 @@ class Header extends Component {
 
   render() {
     this.renderNavButtons();
-    console.log('t', this.container);
     return this.container;
   }
 }
