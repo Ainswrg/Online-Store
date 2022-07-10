@@ -1,7 +1,8 @@
-import Component from '../../core/templates/component';
-import Page from '../../core/templates/page';
-import Product from '../../core/components/product';
-import { IProduct } from '../../core/ts/interfaces';
+/* eslint-disable import/extensions */
+import Page from '@core/templates/page';
+import Component from '@core/templates/component';
+import Product from '@core/components/product';
+import { IProduct } from '@core/ts/interfaces';
 
 class MainPage extends Page {
   protected data: IProduct[];

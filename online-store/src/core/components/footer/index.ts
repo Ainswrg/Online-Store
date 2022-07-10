@@ -1,5 +1,5 @@
-import Component from '../../templates/component';
-import { Url } from '../../ts/enum';
+import Component from '@core/templates/component';
+import { Url } from '@core/ts/enum';
 
 const Links = [
   {

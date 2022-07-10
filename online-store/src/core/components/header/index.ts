@@ -1,5 +1,5 @@
-import Component from '../../templates/component';
-import { PageIds } from '../../ts/enum';
+import Component from '@core/templates/component';
+import { PageIds } from '@core/ts/enum';
 
 const Buttons = [
   {

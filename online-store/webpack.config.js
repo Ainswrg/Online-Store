@@ -1,6 +1,7 @@
 const path = require('path');
 const { merge } = require('webpack-merge');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
 
 const baseConfig = {
   entry: './src/index.ts',
@@ -40,10 +41,11 @@ const baseConfig = {
   },
   resolve: {
     extensions: ['.ts', '.js'],
+    plugins: [
+      new TsconfigPathsPlugin()
+    ],
     alias: {
-      '@imgs': path.resolve(__dirname, './src/assets/images'),
-      '@core': path.resolve(__dirname, './src/core'),
-      '@components': path.resolve(__dirname, './src/core/components'),
+      '@imgs': path.resolve(__dirname, 'src/assets/images'),
     },
   },
   output: {

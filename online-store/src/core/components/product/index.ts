@@ -1,5 +1,5 @@
-import Component from '../../templates/component';
-import { IProduct } from '../../ts/interfaces';
+import Component from '@core/templates/component';
+import { IProduct } from '@core/ts/interfaces';
 
 class Product extends Component {
   private cart: IProduct;

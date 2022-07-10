@@ -1,4 +1,4 @@
-import Page from '../../core/templates/page';
+import Page from '@core/templates/page';
 
 class Cart extends Page {
   static TextObject = {
