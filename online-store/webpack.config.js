@@ -14,7 +14,7 @@ const baseConfig = {
         exclude: /node_modules/,
       },
       {
-        test: /\.(?:ico|gif|jpg|png|mp4)$/i,
+        test: /\.(?:ico|gif|jpg|png|mp4|webp)$/i,
         type: 'asset/resource',
         generator: {
           filename: 'assets/images/[name][ext]'

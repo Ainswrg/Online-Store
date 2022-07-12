@@ -16,6 +16,7 @@ specifiers:
   html-webpack-plugin: ^5.5.0
   mini-css-extract-plugin: ^2.6.1
   normalize.css: ^8.0.1
+  nouislider: ^15.6.0
   prettier: ^2.7.1
   sass: ^1.53.0
   sass-loader: ^13.0.2
@@ -32,6 +33,7 @@ specifiers:
 
 dependencies:
   normalize.css: 8.0.1
+  nouislider: 15.6.0
   sass: 1.53.0
 
 devDependencies:
@@ -1450,15 +1452,6 @@ packages:
       eslint: 8.19.0
     dev: true
 
-  /eslint-import-resolver-alias/1.1.2_fkfqfehjtk7sk2efaqbgxsuasa:
-    resolution: {integrity: sha512-WdviM1Eu834zsfjHtcGHtGfcu+F30Od3V7I9Fi57uhBEwPkjDcii7/yW8jAT+gOhn4P/vOxxNAXbFAKsrrc15w==}
-    engines: {node: '>= 4'}
-    peerDependencies:
-      eslint-plugin-import: '>=1.4.0'
-    dependencies:
-      eslint-plugin-import: 2.26.0_iom7pm3yknyiblqpw2vvqvxs5i
-    dev: true
-
   /eslint-import-resolver-node/0.3.6:
     resolution: {integrity: sha512-0En0w03NRVMn9Uiyn8YRPDKvWjxCWkslUEhGNTdGx15RvPJYQ+lbOlqrlNI2vEAs4pDYK4f/HN2TbDmk5TP0iw==}
     dependencies:
@@ -2672,6 +2665,10 @@ packages:
 
   /normalize.css/8.0.1:
     resolution: {integrity: sha512-qizSNPO93t1YUuUhP22btGOo3chcvDFqFaj2TRybP0DMxkHOCTYwp3n34fel4a31ORXy4m1Xq0Gyqpb5m33qIg==}
+    dev: false
+
+  /nouislider/15.6.0:
+    resolution: {integrity: sha512-YJg+A6RQXTuFqhEwd42FeRaEGMGgDSSNnpIyVtT8XJrNl4VBEUkPI6Yj91bT3JjJIvNYi4VdppWeCV+z2gOnnw==}
     dev: false
 
   /npm-run-path/4.0.1:
