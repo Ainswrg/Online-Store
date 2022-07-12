@@ -20,7 +20,7 @@ body {
 }
 
 .header {
-  background-color: #111827;
+  background-color: $background;
   padding: 20px;
   text-align: center;
 
@@ -28,15 +28,37 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    &-icon {
+      display: flex;
+      font-size: 1.5rem;
+      width: 40px;
+      color: $white;
+      cursor: pointer;
+    }
+    &-quantity {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background-color: $white;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: $background;
+      margin-right: 10px;
+    }
     a {
-      color: #fff;
+      color: $white;
       text-decoration: none;
       font-size: 1.2rem;
       font-weight: bold;
       padding: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       &:hover {
-        color: #fff;
-        text-decoration: underline;
+        color: $white;
       }
     }
   }
@@ -47,7 +69,7 @@ body {
 }
 
 .footer {
-  background-color: #111827;
+  background-color: $background;
   padding: 20px;
   text-align: center;
 
@@ -66,7 +88,7 @@ body {
         font-weight: bold;
         padding: 10px;
         &:hover {
-          color: #fff;
+          color: $white;
           text-decoration: underline;
           cursor: pointer;
         }
@@ -80,4 +102,12 @@ body {
       }
     }
   }
+}
+
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
 }

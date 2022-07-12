@@ -29,5 +29,8 @@
   font-weight: 900;
 }
 
+@import './scss/_variables';
 @import './scss/_global';
-@import './pages/home/_home';
+@import './scss/components/_products';
+@import './scss/components/_settings';
+@import 'nouislider/dist/nouislider.min.css';
