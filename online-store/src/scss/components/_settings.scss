@@ -1,0 +1,128 @@
+.settings {
+  width: 100%;
+  height: fit-content;
+  margin: 50px 0;
+  &__title {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  &__wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-column-gap: 11px;
+  }
+  &__filters {
+    border: 2px solid $filterTitle;
+  }
+  @each $name in $settingsValue {
+    &__#{$name} {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      gap: 10px 20px;
+      align-items: center;
+      padding: 5px 10px;
+    }
+    &__subtitle {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: $filterTitle;
+    }
+    &__label {
+      font-size: 0.6rem;
+      font-weight: bold;
+      color: $filterTitle;
+      width: 50px;
+      height: 45px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 10%;
+      text-align: center;
+      background-color: $labelBackground;
+      cursor: pointer;
+      &.active {
+        background-color: $labelBackgroundActive;
+        color: $labelActive;
+      }
+    }
+    &__input {
+      display: none;
+    }
+  }
+}
+
+.range {
+  padding: 5px 15px;
+
+  &__subtitle {
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  &__slider {
+    margin-bottom: 14px;
+  }
+  &__values {
+    display: flex;
+    gap: 10px;
+  }
+  &__input {
+    width: 100%;
+    border: none;
+    height: 28px;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-size: 18px;
+    color: #fff;
+  }
+  &__input:nth-child(1) {
+    background: $primary;
+  }
+  &__input:nth-child(2) {
+    background: $secondary;
+  }
+  &__input:focus {
+    outline: none;
+  }
+  .noUi {
+    &-connect {
+      background: linear-gradient(90deg, $primary 0%, $secondary 100%);
+    }
+    &-target {
+      box-shadow: 0 0 4px $primary;
+      border: none;
+      background: #111;
+    }
+    &-handle {
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.24);
+      border: none;
+      border-radius: 50%;
+      background: #111;
+      cursor: pointer;
+    }
+    &-handle:before,
+    &-handle:after {
+      display: none;
+    }
+    &-handle-lower {
+      background: $primary;
+      box-shadow: 0 0 16px $primary;
+    }
+    &-handle-upper {
+      background: $secondary;
+      box-shadow: 0 0 16px $secondary;
+    }
+    &-horizontal {
+      height: 13px;
+      cursor: e-resize;
+    }
+    &-horizontal .noUi-handle {
+      width: 24px;
+      height: 24px;
+      right: -12px;
+    }
+  }
+}
