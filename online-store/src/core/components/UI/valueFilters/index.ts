@@ -1,14 +1,20 @@
 import Component from '@core/templates/component';
 
 class ValueFilters extends Component {
-  private enableListeners: (arr: (HTMLLabelElement | HTMLInputElement)[][]) => void;
-  constructor(
-    tagName: string,
-    className: string,
-    enableListeners: (arr: (HTMLLabelElement | HTMLInputElement)[][]) => void
-  ) {
-    super(tagName, className);
-    this.enableListeners = enableListeners;
+  private enableListeners(arr: (HTMLLabelElement | HTMLInputElement)[][]): void {
+    const addEListener = (inputElement: Element, labelElement: Element): void => {
+      inputElement.addEventListener('change', (e: Event) => {
+        const myTarget = e.target as HTMLInputElement;
+        if (myTarget.checked) {
+          labelElement.classList.add('active');
+        } else {
+          labelElement.classList.remove('active');
+        }
+      });
+    };
+    arr.forEach(([input, label]) => {
+      addEListener(input, label);
+    });
   }
 
   private createInput = (value: string, name: string): HTMLInputElement => {

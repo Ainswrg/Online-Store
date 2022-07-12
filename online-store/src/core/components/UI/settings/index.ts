@@ -4,24 +4,9 @@ import ValueFilters from '../valueFilters';
 
 class Settings extends Component {
   value!: string | number;
-  enableListeners(arr: (HTMLLabelElement | HTMLInputElement)[][]): void {
-    const addEListener = (inputElement: Element, labelElement: Element): void => {
-      inputElement.addEventListener('change', (e: Event) => {
-        const myTarget = e.target as HTMLInputElement;
-        if (myTarget.checked) {
-          labelElement.classList.add('active');
-        } else {
-          labelElement.classList.remove('active');
-        }
-      });
-    };
-    arr.forEach(([input, label]) => {
-      addEListener(input, label);
-    });
-  }
 
   generateFiltersValue(): void {
-    const filters = new ValueFilters('div', 'settings__filters', this.enableListeners);
+    const filters = new ValueFilters('div', 'settings__filters');
     this.container.append(filters.render());
   }
 
