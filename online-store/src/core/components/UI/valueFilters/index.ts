@@ -32,7 +32,7 @@ class ValueFilters extends Component {
     return label;
   };
 
-  generateFilters(): void {
+  private generateFilters(): void {
     const title = document.createElement('h2');
     title.classList.add('settings__title');
     title.textContent = 'Фильтры по значению';

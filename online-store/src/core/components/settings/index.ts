@@ -1,10 +1,7 @@
 import Component from '@core/templates/component';
-import RangeFilters from '../rangeFilters';
-import ValueFilters from '../valueFilters';
+import { Buttons, ValueFilters, RangeFilters, Search, Sort } from '@core/components/';
 
 class Settings extends Component {
-  value!: string | number;
-
   generateFiltersValue(): void {
     const filters = new ValueFilters('div', 'settings__filters');
     this.container.append(filters.render());
@@ -14,19 +11,16 @@ class Settings extends Component {
     const filters = new RangeFilters('div', 'settings__filters');
     this.container.append(filters.render());
   }
+
   generateSorting() {
     const filters = document.createElement('div');
     filters.classList.add('settings__filters');
-    let template = '';
-    template += `<h2 class="settings__title">Сортировка</h2>`;
-    template += `<div class="settings__category">`;
-    template += `<h3>Категория:</h3>`;
-    template += `<input type="checkbox" id="marvel" value="marvel" name="category">`;
-    template += `<label for="marvel">Superhero</label>`;
-    template += `<input type="checkbox" id="dc" value="dc" name="category">`;
-    template += `<label for="dc">DC</label>`;
-    template += `</div>`;
-    filters.innerHTML = template;
+
+    const search = new Search('div', 'settings__search');
+    const sort = new Sort('div', 'settings__sort');
+    const buttons = new Buttons('div', 'settings__buttons');
+
+    filters.append(search.render(), sort.render(), buttons.render());
     this.container.append(filters);
   }
 

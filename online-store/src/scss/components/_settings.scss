@@ -1,3 +1,7 @@
+$background-gradient: linear-gradient(30deg, #f39c12 30%, #f1c40f);
+$gray: #34495e;
+$darkgray: #2c3e50;
+
 .settings {
   width: 100%;
   height: fit-content;
@@ -25,31 +29,138 @@
       align-items: center;
       padding: 5px 10px;
     }
-    &__subtitle {
+  }
+  &__subtitle {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: $filterTitle;
+  }
+  &__label {
+    font-size: 0.6rem;
+    font-weight: bold;
+    color: $filterTitle;
+    width: 50px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10%;
+    text-align: center;
+    background-color: $labelBackground;
+    cursor: pointer;
+    &.active {
+      background-color: $labelBackgroundActive;
+      color: $labelActive;
+    }
+  }
+  &__input {
+    display: none;
+  }
+  &__search {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 15px 0px;
+    &-title {
+      display: none;
       font-size: 1.2rem;
       font-weight: bold;
       color: $filterTitle;
     }
-    &__label {
-      font-size: 0.6rem;
+    &-input {
+      width: 80%;
+      margin: 0 auto;
+      height: 40px;
+      border-radius: 0.25em;
+      border: 2px solid $filterTitle;
+      padding: 0 10px;
+      font-size: 1.2rem;
       font-weight: bold;
       color: $filterTitle;
-      width: 50px;
-      height: 45px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 10%;
-      text-align: center;
-      background-color: $labelBackground;
-      cursor: pointer;
-      &.active {
-        background-color: $labelBackgroundActive;
-        color: $labelActive;
+      &:focus {
+        outline: none;
       }
     }
-    &__input {
+  }
+  &__sort {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    width: 80%;
+    height: 3em;
+    border-radius: 0.25em;
+    overflow: hidden;
+    margin: 0 auto;
+    &::-ms-expand {
       display: none;
+    }
+    &::after {
+      content: '\25BC';
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 1em;
+      background-color: #34495e;
+      transition: 0.25s all ease;
+      pointer-events: none;
+    }
+    &:hover::after {
+      color: #f39c12;
+    }
+    &-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: $filterTitle;
+      display: flex;
+      width: 50%;
+      height: 3em;
+      background-color: #2c3e50;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-self: center;
+      padding-left: 1rem;
+    }
+    &-select {
+      appearance: none;
+      outline: 0;
+      border: 0;
+      box-shadow: none;
+      flex: 1;
+      padding: 0 1em;
+      color: #fff;
+      background-color: $darkgray;
+      background-image: none;
+      cursor: pointer;
+      &:hover {
+        background-color: $gray;
+      }
+    }
+  }
+  &__buttons {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 2rem auto;
+
+  }
+  &__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 9rem;
+    height: 4rem;
+    border-radius: 0.25em;
+    background-color: $buttonBackground;
+    color: $buttonColor;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    &:hover {
+      background-color: $buttonBackgroundHover;
+      color: $buttonColorHover;
     }
   }
 }
@@ -101,7 +212,7 @@
       border: none;
       border-radius: 50%;
       background: #111;
-      cursor: pointer;
+      cursor: e-resize;
     }
     &-handle:before,
     &-handle:after {
@@ -117,7 +228,7 @@
     }
     &-horizontal {
       height: 13px;
-      cursor: e-resize;
+      cursor: pointer;
     }
     &-horizontal .noUi-handle {
       width: 24px;

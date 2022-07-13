@@ -29,9 +29,9 @@ class Product extends Component {
 
   generateProduct(): void {
     // eslint-disable-next-line global-require
-    const img: string = require(`@imgs/${this.cart.img}`);
+    const img: string = require(`@imgs/${this.cart.img}.webp`);
     let template: string = '';
-
+    // ToDo переписать без template
     if (this.cart.title) {
       template += `<div class="product__img">`;
       template += `<img src="${img}" alt=${this.cart.img}>`;

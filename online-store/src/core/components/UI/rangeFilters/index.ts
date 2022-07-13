@@ -2,7 +2,7 @@ import Component from '@core/templates/component';
 import noUiSlider, { target } from 'noUiSlider';
 
 class RangeFilters extends Component {
-  generateFilters(): void {
+  private generateFilters(): void {
     const title = document.createElement('h2');
     title.classList.add('settings__title');
     title.textContent = 'Фильтры по значению';
