@@ -4,7 +4,7 @@ interface IProduct {
   quantity: number;
   category: string[];
   price: number;
-  publishDate: string;
+  year: string;
   writer: string;
   img: string;
   description: string;
