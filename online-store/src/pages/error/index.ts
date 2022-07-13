@@ -1,8 +1,5 @@
 import Page from '@core/templates/page';
-
-export const enum ErrorTypes {
-  Error_404 = 404,
-}
+import { ErrorTypes } from '@core/ts/enum';
 
 class ErrorPage extends Page {
   private errorType: ErrorTypes | string;

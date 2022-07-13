@@ -8,5 +8,8 @@ const enum Url {
   author = 'https://github.com/Ainswrg',
   school = 'https://rs.school/',
 }
+const enum ErrorTypes {
+  Error_404 = 404,
+}
 
-export { PageIds, Url };
+export { PageIds, Url, ErrorTypes };

@@ -1,10 +1,8 @@
-import { Main, Header, Footer } from '@core/components';
+import { Main, Header, Footer } from '@core/layouts';
 import Component from '@core/templates/component';
 import Page from '@core/templates/page';
-import { PageIds } from '@core/ts/enum';
-import MainPage from '@pages/home';
-import CartPage from '@pages/cart';
-import ErrorPage, { ErrorTypes } from '../error';
+import { PageIds, ErrorTypes } from '@core/ts/enum';
+import { MainPage, CartPage, ErrorPage } from '@pages/index';
 import data from '@/fakeData.json';
 
 class App extends Component {
