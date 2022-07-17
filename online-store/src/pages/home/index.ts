@@ -1,7 +1,7 @@
 /* eslint-disable import/extensions */
 import Page from '@core/templates/page';
 import Component from '@core/templates/component';
-import { IProduct, ICallbacks, IFilterValues } from '@core/ts/interfaces';
+import { IProduct, ICallbacks } from '@core/ts/interfaces';
 import { TListenersElements } from '@core/ts/types';
 import { Settings, Product } from '@/core/components';
 import Filters from '@/core/filters';
@@ -10,10 +10,12 @@ class MainPage extends Page {
   protected data: IProduct[];
   values = new Map<string, TListenersElements>();
   products: HTMLElement;
+  buttons: HTMLElement[] = [];
 
   constructor(id: string, data: IProduct[]) {
     super(id);
     this.data = data;
+    this.buttons = [];
     this.products = this.generateProducts();
   }
 
@@ -64,8 +66,9 @@ class MainPage extends Page {
   enableAllListeners(): void {
     const filters = new Filters();
     const values = this.getValues();
-    // const search = values.get('search');
-    // const sort = values.get('sort');
+
+    const search = values.get('search');
+    const sort = values.get('sort');
     const inputMarvel = values.get('inputMarvel');
     const inputDC = values.get('inputDC');
     const inputOther = values.get('inputOther');
@@ -75,7 +78,20 @@ class MainPage extends Page {
     const inputOngoing = values.get('inputOngoing');
     const inputCompleted = values.get('inputCompleted');
     const inputPopular = values.get('inputPopular');
-    const filterValue: IFilterValues[] = [
+    const quantity = values.get('quantityRange');
+    const year = values.get('yearsRange');
+
+    const filterValue = [
+      {
+        type: 'sort',
+        input: sort,
+        value: '',
+      },
+      {
+        type: 'search',
+        input: search,
+        value: '',
+      },
       {
         type: 'category',
         input: inputMarvel,
@@ -121,20 +137,36 @@ class MainPage extends Page {
         input: inputPopular,
         value: 'rating',
       },
+      {
+        type: 'quantity',
+        input: quantity,
+        value: '',
+      },
+      {
+        type: 'year',
+        input: year,
+        value: '',
+      },
     ];
 
     filterValue.forEach((item) => {
-      filters.enableValueFilterListener(
+      filters.enableFiltersListener(
         {
           element: item.input as HTMLInputElement,
           data: this.data,
-          targetSort: item.type,
+          targetType: item.type,
           value: item.value,
         },
         { wrapper: this.products, container: this.container, product: this.generateProduct },
-        this.generateProductWrapper
+        this.generateProductWrapper,
+        sort,
+        search
       );
     });
+  }
+
+  setButtons(el: HTMLElement) {
+    this.buttons.push(el);
   }
 
   getValues(): Map<string, TListenersElements> {

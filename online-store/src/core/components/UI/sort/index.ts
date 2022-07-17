@@ -1,6 +1,7 @@
 import Component from '@core/templates/component';
 
 class Sort extends Component {
+  static select: HTMLSelectElement | null = null;
   generateSorting() {
     const sortTitle = document.createElement('h3');
     sortTitle.classList.add('settings__sort-title');
@@ -11,21 +12,27 @@ class Sort extends Component {
 
     const sortSelectOption1 = document.createElement('option');
     sortSelectOption1.textContent = 'По названию А-Я';
+    sortSelectOption1.value = 'name-asc';
 
     const sortSelectOption2 = document.createElement('option');
-    sortSelectOption1.textContent = 'По названию Я-А';
+    sortSelectOption2.textContent = 'По названию Я-А';
+    sortSelectOption2.value = 'name-desc';
 
     const sortSelectOption3 = document.createElement('option');
-    sortSelectOption3.textContent = 'По цене по возрастанию';
+    sortSelectOption3.textContent = 'По цене возрастания';
+    sortSelectOption3.value = 'price-asc';
 
     const sortSelectOption4 = document.createElement('option');
-    sortSelectOption4.textContent = 'По цене по убыванию';
+    sortSelectOption4.textContent = 'По цене убывания';
+    sortSelectOption4.value = 'price-desc';
 
     const sortSelectOption5 = document.createElement('option');
-    sortSelectOption5.textContent = 'По дате по возрастанию';
+    sortSelectOption5.textContent = 'По дате возрастания';
+    sortSelectOption5.value = 'date-asc';
 
     const sortSelectOption6 = document.createElement('option');
-    sortSelectOption6.textContent = 'По дате по убыванию';
+    sortSelectOption6.textContent = 'По дате убывания';
+    sortSelectOption6.value = 'date-desc';
 
     sortSelect.append(
       sortSelectOption1,
@@ -35,8 +42,17 @@ class Sort extends Component {
       sortSelectOption5,
       sortSelectOption6
     );
+    this.setSelect(sortSelect);
 
     this.container.append(sortTitle, sortSelect);
+  }
+
+  getSelect(): HTMLSelectElement | null {
+    return Sort.select;
+  }
+
+  setSelect(value: HTMLSelectElement | null): void {
+    Sort.select = value;
   }
 
   render() {

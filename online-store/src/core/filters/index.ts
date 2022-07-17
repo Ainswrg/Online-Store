@@ -1,120 +1,118 @@
+import { TListenersElements } from '@core/ts/types';
 import { ICallbacks, IProduct, IValueFilterEnable, IFiltersType } from '@core/ts/interfaces';
 import { ParamsType } from '@core/ts/enum';
+import { target } from 'noUiSlider';
+import Sort from './sort';
+import Filter from './filter';
+
+type TGetRes = number | string | (string | number)[];
 
 class Filters {
   filters: IFiltersType[];
   updatedData: IProduct[];
+  filter: Filter;
+  sort: Sort;
   constructor() {
     this.filters = [];
     this.updatedData = [];
+    this.filter = new Filter();
+    this.sort = new Sort();
   }
 
-  filterData(data: IProduct[], filtersType: IFiltersType[]): IProduct[] {
-    const resCategory: IProduct[] = [];
-    const resGenres: IProduct[] = [];
-    const resStatus: IProduct[] = [];
-    const resPopular: IProduct[] = [];
-
-    const sortedTypes = filtersType.sort((a: IFiltersType, b: IFiltersType) => Number(a.id) - Number(b.id));
-    sortedTypes.forEach((filters) => {
-      if (filters.params === 'category') {
-        resCategory.push(...data.filter((item) => item.category.includes(filters.value)));
-      }
-      if (filters.params === 'genres') {
-        const currentData = resCategory.length === 0 ? data : resCategory;
-        resGenres.push(...currentData.filter((item) => item.genres.includes(filters.value)));
-      }
-      if (filters.params === 'status') {
-        const notEmpty: IProduct[] = resCategory.length === 0 ? data : resCategory;
-        const currentData = resGenres.length === 0 ? notEmpty : resGenres;
-        resStatus.push(...currentData.filter((item) => item.status.includes(filters.value)));
-      }
-      if (filters.params === 'rating') {
-        let notEmpty: IProduct[] = [];
-        if (resGenres.length === 0) {
-          notEmpty = resCategory.length === 0 ? data : resCategory;
-        } else {
-          notEmpty = resGenres;
-        }
-        const currentData = resStatus.length === 0 ? notEmpty : resStatus;
-        resPopular.push(...currentData.filter((item) => item.rating > 4.5));
-      }
-    });
-
-    const haveId = (id: number) => filtersType.some((el) => el.id === id);
-    const haveIdAndNotEmpty = (id: number, arr: IProduct[]) => {
-      if (haveId(id)) {
-        return arr.length !== 0;
-      }
-      return true;
-    };
-
-    let res = [];
-
-    if (
-      haveId(4) &&
-      haveIdAndNotEmpty(1, resCategory) &&
-      haveIdAndNotEmpty(2, resGenres) &&
-      haveIdAndNotEmpty(3, resStatus)
-    ) {
-      res = resPopular;
-    } else if (haveId(3) && haveIdAndNotEmpty(1, resCategory) && haveIdAndNotEmpty(2, resGenres)) {
-      res = resStatus;
-    } else if (haveId(2) && haveIdAndNotEmpty(1, resCategory)) {
-      res = resGenres;
-    } else if (haveId(1)) {
-      res = resCategory;
-    } else {
-      res = data;
-    }
-    return res;
-  }
-
-  enableValueFilterListener(
+  enableFiltersListener(
     args: IValueFilterEnable,
     callbacks: ICallbacks,
-    wrapperCallback: (callbacks: ICallbacks, data: IProduct[]) => HTMLElement
+    wrapperCallback: (callbacks: ICallbacks, data: IProduct[]) => HTMLElement,
+    sort: TListenersElements | undefined,
+    search: TListenersElements | undefined
   ): void {
-    args.element.addEventListener('change', () => {
-      const myTarget = args.element as HTMLInputElement;
-      const currentData = args.data;
-      const isChecked = (target: HTMLInputElement, id: number, paramsType: string) => {
-        if (target.name === 'genres') {
-          const valueUppercase = target.value[0].toUpperCase() + target.value.slice(1);
-          if (target.checked) {
-            this.filters.push({ id, params: paramsType, value: valueUppercase });
-          } else {
-            this.filters = this.filters.filter((el) => el.value !== valueUppercase);
-          }
-        } else if (target.checked) {
-          this.filters.push({ id, params: paramsType, value: target.value });
+    const myTarget = args.element as HTMLInputElement;
+    const targetFilter = args.targetType;
+    const mySort = sort as HTMLSelectElement;
+    const mySearch = search as HTMLInputElement;
+
+    const currentData = args.data;
+    const isChecked = (targetElement: HTMLInputElement, id: number, paramsType: string) => {
+      if (targetElement.name === 'genres') {
+        const valueUppercase = targetElement.value[0].toUpperCase() + targetElement.value.slice(1);
+        if (targetElement.checked) {
+          this.filters.push({ id, params: paramsType, value: valueUppercase });
         } else {
-          this.filters = this.filters.filter((el) => el.value !== target.value);
+          this.filters = this.filters.filter((el) => el.value !== valueUppercase);
         }
-      };
-      if (myTarget.name === ParamsType.category) {
-        isChecked(myTarget, 1, ParamsType.category);
+      } else if (targetElement.checked) {
+        this.filters.push({ id, params: paramsType, value: targetElement.value });
+      } else {
+        this.filters = this.filters.filter((el) => el.value !== targetElement.value);
       }
-      if (myTarget.name === ParamsType.genres) {
-        isChecked(myTarget, 2, ParamsType.genres);
-      }
-      if (myTarget.name === ParamsType.status) {
-        isChecked(myTarget, 3, ParamsType.status);
-      }
-      if (myTarget.name === ParamsType.popular) {
-        isChecked(myTarget, 4, ParamsType.popular);
-      }
-      this.filterByValue(wrapperCallback, callbacks, currentData);
-    });
+    };
+
+    const isUpdated = (value: TGetRes | undefined, id: number, paramsType: string) => {
+      this.filters = this.filters.filter((el) => el.params !== paramsType);
+      this.filters.push({ id, params: paramsType, value: `${value}` });
+    };
+
+    if (
+      args.targetType === ParamsType.category ||
+      args.targetType === ParamsType.status ||
+      args.targetType === ParamsType.genres ||
+      args.targetType === ParamsType.popular
+    ) {
+      args.element.addEventListener('change', () => {
+        if (targetFilter === ParamsType.category) {
+          isChecked(myTarget, 3, ParamsType.category);
+        }
+        if (targetFilter === ParamsType.genres) {
+          isChecked(myTarget, 4, ParamsType.genres);
+        }
+        if (targetFilter === ParamsType.status) {
+          isChecked(myTarget, 5, ParamsType.status);
+        }
+        if (targetFilter === ParamsType.popular) {
+          isChecked(myTarget, 6, ParamsType.popular);
+        }
+        this.filterOnPage(wrapperCallback, callbacks, currentData, mySort.value, mySearch.value);
+      });
+    }
+
+    if (args.targetType === ParamsType.quantity || args.targetType === ParamsType.year) {
+      const range = args.element as target;
+      range.noUiSlider?.on('update', () => {
+        const value = range.noUiSlider?.get();
+        if (targetFilter === ParamsType.quantity) {
+          isUpdated(value, 1, ParamsType.quantity);
+        }
+        if (targetFilter === ParamsType.year) {
+          isUpdated(value, 2, ParamsType.year);
+        }
+        this.filterOnPage(wrapperCallback, callbacks, currentData, mySort.value, mySearch.value);
+      });
+    }
+    if (args.targetType === 'sort') {
+      args.element.addEventListener('change', () => {
+        const element = args.element as HTMLSelectElement;
+        this.filterOnPage(wrapperCallback, callbacks, currentData, element.value, mySearch.value);
+      });
+    }
+    if (args.targetType === 'search') {
+      args.element.addEventListener('keyup', () => {
+        const element = args.element as HTMLInputElement;
+        this.filterOnPage(wrapperCallback, callbacks, currentData, mySort.value, element.value);
+      });
+    }
   }
 
-  filterByValue(
+  filterOnPage(
     generateProduct: (callbacks: ICallbacks, data: IProduct[]) => HTMLElement,
     callbacks: ICallbacks,
-    data: IProduct[]
+    data: IProduct[],
+    targetSort: string,
+    targetSearch: string
   ) {
-    const currentData = this.filterData(data, this.filters);
-    generateProduct(callbacks, currentData);
+    const filteredData = this.filter.filterData(data, this.filters);
+    const sortedData = this.sort.sortData(filteredData, targetSort);
+    const filteredBySearch = this.filter.filterBySearch(targetSearch, sortedData);
+    generateProduct(callbacks, filteredBySearch);
   }
 }
 

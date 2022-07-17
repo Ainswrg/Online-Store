@@ -2,6 +2,7 @@ import Component from '@core/templates/component';
 import noUiSlider, { target } from 'noUiSlider';
 
 class RangeFilters extends Component {
+  inputs: HTMLElement[] = [];
   private generateFilters(): void {
     const title = document.createElement('h2');
     title.classList.add('settings__title');
@@ -49,13 +50,16 @@ class RangeFilters extends Component {
     const rangeYears = document.createElement('div');
     rangeYears.classList.add('range__slider');
 
-    this.rangeSliderInit(rangeQuantity, inputMinQuantity, inputMaxQuantity, 1, 20);
-    this.rangeSliderInit(rangeYears, inputMinYears, inputMaxYears, 2006, 2022);
+    const quantityRange = this.rangeSliderInit(rangeQuantity, inputMinQuantity, inputMaxQuantity, 1, 20);
+    const yearsRange = this.rangeSliderInit(rangeYears, inputMinYears, inputMaxYears, 2006, 2022);
 
     rangeValuesQuantity.append(inputMinQuantity, inputMaxQuantity);
     rangeValuesYears.append(inputMinYears, inputMaxYears);
     quantity.append(subtitle, rangeQuantity, rangeValuesQuantity);
     years.append(subtitleYears, rangeYears, rangeValuesYears);
+
+    this.setInputs(quantityRange);
+    this.setInputs(yearsRange);
     this.container.append(title, quantity, years);
   }
 
@@ -65,7 +69,7 @@ class RangeFilters extends Component {
     inputMax: HTMLInputElement,
     min: number,
     max: number
-  ): void {
+  ): target {
     const inputs: Array<HTMLInputElement> = [inputMin, inputMax];
 
     noUiSlider.create(range, {
@@ -98,6 +102,16 @@ class RangeFilters extends Component {
     inputMax.addEventListener('change', () => {
       range.noUiSlider!.set([inputMin.value, inputMax.value]);
     });
+
+    return range;
+  }
+
+  getInputs(): Array<HTMLElement> {
+    return this.inputs;
+  }
+
+  setInputs(input: HTMLElement) {
+    this.inputs.push(input);
   }
 
   render() {

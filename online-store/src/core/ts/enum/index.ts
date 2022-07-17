@@ -17,6 +17,8 @@ const enum ParamsType {
   genres = 'genres',
   status = 'status',
   popular = 'rating',
+  quantity = 'quantity',
+  year = 'year',
 }
 
 export { PageIds, Url, ErrorTypes, ParamsType };

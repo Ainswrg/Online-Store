@@ -17,7 +17,7 @@ interface IProduct {
 interface IValueFilterEnable {
   element: HTMLElement;
   data: IProduct[];
-  targetSort: keyof IProduct;
+  targetType: string;
   value: string;
 }
 interface ICallbacks {
