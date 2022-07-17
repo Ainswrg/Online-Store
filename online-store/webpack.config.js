@@ -17,7 +17,7 @@ const baseConfig = {
         test: /\.(?:ico|gif|jpg|png|mp4|webp)$/i,
         type: 'asset/resource',
         generator: {
-          filename: 'assets/images/[name][ext]'
+          filename: 'assets/images/[hash][ext]'
         },
       },
       {

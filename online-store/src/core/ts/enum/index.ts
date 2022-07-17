@@ -12,4 +12,11 @@ const enum ErrorTypes {
   Error_404 = 404,
 }
 
-export { PageIds, Url, ErrorTypes };
+const enum ParamsType {
+  category = 'category',
+  genres = 'genres',
+  status = 'status',
+  popular = 'rating',
+}
+
+export { PageIds, Url, ErrorTypes, ParamsType };

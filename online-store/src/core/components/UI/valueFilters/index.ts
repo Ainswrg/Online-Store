@@ -1,6 +1,7 @@
 import Component from '@core/templates/component';
 
 class ValueFilters extends Component {
+  static inputs: HTMLInputElement[] = [];
   private enableListeners(arr: (HTMLLabelElement | HTMLInputElement)[][]): void {
     const addEListener = (inputElement: Element, labelElement: Element): void => {
       inputElement.addEventListener('change', (e: Event) => {
@@ -50,18 +51,18 @@ class ValueFilters extends Component {
     const inputOther = this.createInput('other', 'category');
     const labelOther = this.createLabel('Other');
 
-    //  create genre filter
-    const genre = document.createElement('div');
-    genre.classList.add('settings__genre');
+    //  create genres filter
+    const genres = document.createElement('div');
+    genres.classList.add('settings__genre');
     const subtitleGenre = document.createElement('h3');
     subtitleGenre.classList.add('settings__subtitle');
     subtitleGenre.textContent = 'Жанр:';
-    const inputSuperhero = this.createInput('superhero', 'genre');
+    const inputSuperhero = this.createInput('superhero', 'genres');
     const labelSuperhero = this.createLabel('Superhero');
-    const inputAction = this.createInput('action', 'genre');
+    const inputAction = this.createInput('action', 'genres');
     const labelAction = this.createLabel('Action');
-    const inputScience = this.createInput('science-fiction', 'genre');
-    const labelScience = this.createLabel('Science-fiction');
+    const inputScience = this.createInput('sci-fi', 'genres');
+    const labelScience = this.createLabel('Sci-fi');
 
     //  create status filter
     const status = document.createElement('div');
@@ -80,7 +81,7 @@ class ValueFilters extends Component {
     const subtitlePopular = document.createElement('h3');
     subtitlePopular.classList.add('settings__subtitle');
     subtitlePopular.textContent = 'Популярные:';
-    const inputPopular = this.createInput('popular', 'popular');
+    const inputPopular = this.createInput('rating', 'rating');
     const labelPopular = this.createLabel('Popular');
 
     //  append all elements
@@ -92,7 +93,7 @@ class ValueFilters extends Component {
     labelSuperhero.append(inputSuperhero);
     labelAction.append(inputAction);
     labelScience.append(inputScience);
-    genre.append(subtitleGenre, labelSuperhero, labelAction, labelScience);
+    genres.append(subtitleGenre, labelSuperhero, labelAction, labelScience);
 
     labelOngoing.append(inputOngoing);
     labelCompleted.append(inputCompleted);
@@ -101,7 +102,7 @@ class ValueFilters extends Component {
     labelPopular.append(inputPopular);
     popular.append(subtitlePopular, labelPopular);
 
-    this.container.append(title, category, genre, status, popular);
+    this.container.append(title, category, genres, status, popular);
 
     //  add event listeners
     const listeners = [
@@ -115,7 +116,30 @@ class ValueFilters extends Component {
       [inputCompleted, labelCompleted],
       [inputPopular, labelPopular],
     ];
+    const inputs = [
+      inputMarvel,
+      inputDC,
+      inputOther,
+      inputSuperhero,
+      inputAction,
+      inputScience,
+      inputOngoing,
+      inputCompleted,
+      inputPopular,
+    ];
+    inputs.forEach((input) => {
+      this.setInputs(input);
+    });
+
     this.enableListeners(listeners);
+  }
+
+  getInputs(): HTMLInputElement[] {
+    return ValueFilters.inputs;
+  }
+
+  setInputs(value: HTMLInputElement): void {
+    ValueFilters.inputs.push(value);
   }
 
   render() {

@@ -1,15 +1,15 @@
 import Page from '@core/templates/page';
 
-class Cart extends Page {
+class CartPage extends Page {
   static TextObject = {
     MainTitle: 'Cart Page',
   };
 
   render() {
-    const title = this.createHeaderTitle(Cart.TextObject.MainTitle);
+    const title = this.createHeaderTitle(CartPage.TextObject.MainTitle);
     this.container.append(title);
     return this.container;
   }
 }
 
-export default Cart;
+export default CartPage;

@@ -1,5 +1,6 @@
 [
-  {
+  { 
+    "id": 1,
     "title": "Immortal X-Men (2022) #1",
     "genres": ["Superhero"],
     "quantity": 2,
@@ -12,7 +13,8 @@
     "rating": 4.15,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 2,
     "title": "Immortal X-Men (2022) #2",
     "genres": ["Superhero"],
     "quantity": 5,
@@ -25,7 +27,8 @@
     "rating": 4.08,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 3,
     "title": "Immortal X-Men (2022) #3",
     "genres": ["Superhero"],
     "quantity": 3,
@@ -38,7 +41,8 @@
     "rating": 4.53,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 4,
     "title": "Immortal X-Men (2022) #4",
     "genres": ["Superhero"],
     "quantity": 12,
@@ -51,7 +55,8 @@
     "rating": 4.11,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 5,
     "title": "Immortal X-Men (2022) #5",
     "genres": ["Superhero"],
     "quantity": 11,
@@ -64,7 +69,8 @@
     "rating": 4.09,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 6,
     "title": "Immortal X-Men (2022) #6",
     "genres": ["Superhero"],
     "quantity": 14,
@@ -77,7 +83,8 @@
     "rating": 4.12,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 7,
     "title": "The Amazing Spider-Man (2018) #1",
     "genres": ["Superhero"],
     "quantity": 2,
@@ -90,7 +97,8 @@
     "rating": 3.97,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 8,
     "title": "The Amazing Spider-Man (2018) #2",
     "genres": ["Superhero"],
     "quantity": 3,
@@ -103,7 +111,8 @@
     "rating": 3.85,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 9,
     "title": "The Amazing Spider-Man (2018) #3",
     "genres": ["Superhero"],
     "quantity": 12,
@@ -116,7 +125,8 @@
     "rating": 3.84,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 10,
     "title": "The Amazing Spider-Man (2018) #4",
     "genres": ["Superhero"],
     "quantity": 8,
@@ -129,7 +139,8 @@
     "rating": 3.74,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 11,
     "title": "The Amazing Spider-Man (2018) #5",
     "genres": ["Superhero"],
     "quantity": 9,
@@ -142,7 +153,8 @@
     "rating": 3.43,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 12,
     "title": "Black Widow (2014) #1",
     "genres": ["Superhero"],
     "quantity": 2,
@@ -155,7 +167,8 @@
     "rating": 5.00,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 13,
     "title": "Black Widow (2014) #2",
     "genres": ["Superhero"],
     "quantity": 1,
@@ -168,7 +181,8 @@
     "rating": 4.06,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 14,
     "title": "Black Widow (2014) #3",
     "genres": ["Superhero"],
     "quantity": 3,
@@ -181,7 +195,8 @@
     "rating": 4.06,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 15,
     "title": "Black Widow (2014) #4",
     "genres": ["Superhero"],
     "quantity": 5,
@@ -194,7 +209,8 @@
     "rating": 5.00,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 16,
     "title": "Black Widow (2014) #5",
     "genres": ["Superhero"],
     "quantity": 3,
@@ -207,7 +223,8 @@
     "rating": 5.00,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 17,
     "title": "Avengers (2018) #1",
     "genres": ["Superhero"],
     "quantity": 10,
@@ -220,7 +237,8 @@
     "rating": 3.44,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 18,
     "title": "Avengers (2018) #2",
     "genres": ["Superhero"],
     "quantity": 6,
@@ -233,7 +251,8 @@
     "rating": 3.75,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 19,
     "title": "Avengers (2018) #3",
     "genres": ["Superhero"],
     "quantity": 7,
@@ -246,7 +265,8 @@
     "rating": 3.74,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 20,
     "title": "Avengers (2018) #4",
     "genres": ["Superhero"],
     "quantity": 9,
@@ -259,7 +279,8 @@
     "rating": 3.56,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 21,
     "title": "What If...? Miles Morales (2022) #1",
     "genres": ["Superhero"],
     "quantity": 12,
@@ -272,7 +293,8 @@
     "rating": 3.80,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 22,
     "title": "What If...? Miles Morales (2022) #2",
     "genres": ["Superhero"],
     "quantity": 15,
@@ -285,9 +307,10 @@
     "rating": 3.36,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 23,
     "title": "Star Wars: Bounty Hunters (2020) #1",
-    "genres": ["Science-fiction"],
+    "genres": ["Sci-fi"],
     "quantity": 13,
     "category": ["bounty-hunters", "star-wars", "other"],
     "price": 3.99,
@@ -298,9 +321,10 @@
     "rating": 4.50,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 24,
     "title": "Star Wars: Bounty Hunters (2020) #2",
-    "genres": ["Science-fiction"],
+    "genres": ["Sci-fi"],
     "quantity": 10,
     "category": ["bounty-hunters", "star-wars", "other"],
     "price": 3.99,
@@ -311,9 +335,10 @@
     "rating": 4.60,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 25,
     "title": "Star Wars: Bounty Hunters (2020) #3",
-    "genres": ["Science-fiction"],
+    "genres": ["Sci-fi"],
     "quantity": 10,
     "category": ["bounty-hunters", "star-wars", "other"],
     "price": 3.99,
@@ -324,9 +349,10 @@
     "rating": 4.30,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 26,
     "title": "Star Wars: Bounty Hunters (2020) #4",
-    "genres": ["Science-fiction"],
+    "genres": ["Sci-fi"],
     "quantity": 10,
     "category": ["bounty-hunters", "star-wars", "other"],
     "price": 3.99,
@@ -337,7 +363,8 @@
     "rating": 3.60,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 27,
     "title": "BATMAN BEYOND: NEO-YEAR #1",
     "genres": ["Superhero"],
     "quantity": 10,
@@ -350,7 +377,8 @@
     "rating": 4.20,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 28,
     "title": "BATMAN #1",
     "genres": ["Superhero"],
     "quantity": 12,
@@ -363,7 +391,8 @@
     "rating": 5.00,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 29,
     "title": "BATMAN #2",
     "genres": ["Superhero"],
     "quantity": 5,
@@ -376,7 +405,8 @@
     "rating": 5.00,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 30,
     "title": "BATMAN #3",
     "genres": ["Superhero"],
     "quantity": 4,
@@ -389,7 +419,8 @@
     "rating": 5.00,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 31,
     "title": "BATMAN #14",
     "genres": ["Superhero"],
     "quantity": 5,
@@ -402,7 +433,8 @@
     "rating": 4.70,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 32,
     "title": "BATMAN #49",
     "genres": ["Superhero"],
     "quantity": 5,
@@ -415,7 +447,8 @@
     "rating": 4.10,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 33,
     "title": "BATMAN #52",
     "genres": ["Superhero"],
     "quantity": 8,
@@ -428,7 +461,8 @@
     "rating": 4.70,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 34,
     "title": "BATMAN #125",
     "genres": ["Superhero"],
     "quantity": 12,
@@ -441,7 +475,8 @@
     "rating": 4.40,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 35,
     "title": "HARLEEN #1",
     "genres": ["Superhero"],
     "quantity": 12,
@@ -452,9 +487,10 @@
     "img": "harleen1",
     "description": "Dr. Harleen Quinzel has discovered a revolutionary cure for the madness of Gotham City-she just needs to prove it actually works. But with the criminal justice and mental health establishments united against her, the brilliant young psychologist must take drastic measures to save Gotham from itself. Witness Harleen’s first steps on a doomed quest that will give birth to the legendary super-villain Harley Quinn in this stunning reimagining of Harley and The Joker’s twisted and tragic love affair by visionary storyteller Stjepan Å ejic (AQUAMAN: UNDERWORLD, SUICIDE SQUAD, Sunstone).",
     "rating": 4.50,
-    "status": "finished"
+    "status": "completed"
   },
-  {
+  { 
+    "id": 36,
     "title": "HARLEEN #2",
     "genres": ["Superhero"],
     "quantity": 2,
@@ -465,9 +501,10 @@
     "img": "harleen2",
     "description": "Despite the strongest objections from every possible authority—including district attorney Harvey Dent—Dr. Harleen Quinzel’s found herself with free access to every inmate in Arkham Asylum, where she desperately pursues a revolutionary and highly controversial cure to the insanity of Gotham. But her work with the city’s super-criminals quickly muddies the waters of good and evil, and in the deepest, darkest padded rooms of Arkham, even the words of a mad clown start making sense!",
     "rating": 4.60,
-    "status": "finished"
+    "status": "completed"
   },
-  {
+  { 
+    "id": 37,
     "title": "HARLEEN #3",
     "genres": ["Superhero"],
     "quantity": 4,
@@ -478,9 +515,10 @@
     "img": "harleen3",
     "description": "In which our doomed doctor makes a choice she can never take back-one that seals her dark fate and gives rise to one of the most legendary villains of all time!",
     "rating": 4.80,
-    "status": "finished"
+    "status": "completed"
   },
-  {
+  { 
+    "id": 38,
     "title": "The Boys #1",
     "genres": ["Superhero", "Black-comedy", "Satire"],
     "quantity": 4,
@@ -491,9 +529,10 @@
     "img": "the-boys1",
     "description": "The Boys is an irreverent take on what happens when superheroes, who are as popular as celebrities, as influential as politicians and as revered as gods, abuse their superpowers rather than use them for good. It's the powerless against the super powerful as The Boys embark on a heroic quest to expose the truth about 'The Seven' and their formidable Vought American backing.",
     "rating": 4.60,
-    "status": "finished"
+    "status": "completed"
   },
-  {
+  { 
+    "id": 39,
     "title": "The Boys #2",
     "genres": ["Superhero", "Black-comedy", "Satire"],
     "quantity": 5,
@@ -504,9 +543,10 @@
     "img": "the-boys2",
     "description": "The Boys is an irreverent take on what happens when superheroes, who are as popular as celebrities, as influential as politicians and as revered as gods, abuse their superpowers rather than use them for good. It's the powerless against the super powerful as The Boys embark on a heroic quest to expose the truth about 'The Seven' and their formidable Vought American backing.",
     "rating": 4.70,
-    "status": "finished"
+    "status": "completed"
   },
-  {
+  { 
+    "id": 40,
     "title": "The Boys #3",
     "genres": ["Superhero", "Black-comedy", "Satire"],
     "quantity": 5,
@@ -517,11 +557,12 @@
     "img": "the-boys3",
     "description": "The Boys is an irreverent take on what happens when superheroes, who are as popular as celebrities, as influential as politicians and as revered as gods, abuse their superpowers rather than use them for good. It's the powerless against the super powerful as The Boys embark on a heroic quest to expose the truth about 'The Seven' and their formidable Vought American backing.",
     "rating": 4.70,
-    "status": "finished"
+    "status": "completed"
   },
-  {
+  { 
+    "id": 41,
     "title": "Cyberpunk 2077: Blackout #1",
-    "genres": ["Action", "Science-fiction", "Video Game"],
+    "genres": ["Action", "Sci-fi", "Video Game"],
     "quantity": 6,
     "category": ["cyberpunk2077", "other"],
     "price": 3.99,
@@ -532,9 +573,10 @@
     "rating": 4.50,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 42,
     "title": "Cyberpunk 2077: Blackout #2",
-    "genres": ["Action", "Science-fiction", "Video Game"],
+    "genres": ["Action", "Sci-fi", "Video Game"],
     "quantity": 8,
     "category": ["cyberpunk2077", "other"],
     "price": 3.99,
@@ -545,9 +587,10 @@
     "rating": 4.60,
     "status": "ongoing"
   },
-  {
+  { 
+    "id": 43,
     "title": "Stranger Things #1",
-    "genres": ["Science-fiction", "Horror"],
+    "genres": ["Sci-fi", "Horror"],
     "quantity": 8,
     "category": ["stranger-things", "other"],
     "price": 3.99,
@@ -556,11 +599,12 @@
     "img": "stranger-things1",
     "description": "Follow Will Byers into a dimension of decay and destruction where he must use his wits and resolve to dodge the pursuit of the Demogorgon and escape the Upside Down",
     "rating": 4.00,
-    "status": "finished"
+    "status": "completed"
   },
-  {
+  { 
+    "id": 44,
     "title": "Stranger Things #2",
-    "genres": ["Science-fiction", "Horror"],
+    "genres": ["Sci-fi", "Horror"],
     "quantity": 10,
     "category": ["stranger-things", "other"],
     "price": 3.99,
@@ -569,11 +613,12 @@
     "img": "stranger-things2",
     "description": "Stuck in the mysterious Upside Down, Will Byers is cold, scared and starving. He uses his last bullet to temporarily drive away the Demogorgon. Drawing on lessons learned from D&D, Will hunts for food and supplies to prepare for whatever lies ahead. After discovering he can affect the lights in his family home, brief excitement turns to terror when he realizes he isn't the only one that wants to break through to the other side.",
     "rating": 4.10,
-    "status": "finished"
+    "status": "completed"
   },
-  {
+  { 
+    "id": 45,
     "title": "Stranger Things #3",
-    "genres": ["Science-fiction", "Horror"],
+    "genres": ["Sci-fi", "Horror"],
     "quantity": 6,
     "category": ["stranger-things", "other"],
     "price": 3.99,
@@ -582,11 +627,12 @@
     "img": "stranger-things3",
     "description": "He knows there are doors to the other side; he just has to find them before the demogorgon finds him. Will ''The Wise'' always does what is best for the ''Party,'' but how long will that keep him alive in the Upside Down?",
     "rating": 4.20,
-    "status": "finished"
+    "status": "completed"
   },
-  {
+  { 
+    "id": 46,
     "title": "Stranger Things #4",
-    "genres": ["Science-fiction", "Horror"],
+    "genres": ["Sci-fi", "Horror"],
     "quantity": 7,
     "category": ["stranger-things", "other"],
     "price": 3.99,
@@ -595,6 +641,6 @@
     "img": "stranger-things4",
     "description": "Will 'The Wise' is all out of tricks, hunkered down in a makeshift fort and beginning to hallucinate from starvation, dehydration and the terrors of the Upside Down. Will must find the doors to the other side before the demogorgon finds him. Find out what happens when the Demogorgon finally catches its prey.",
     "rating": 4.20,
-    "status": "finished"
+    "status": "completed"
   }
 ]
