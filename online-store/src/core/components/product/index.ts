@@ -1,37 +1,39 @@
+import State from '@core/state';
 import Component from '@core/templates/component';
 import { IProduct } from '@core/ts/interfaces';
 
 class Product extends Component {
-  private cart: IProduct;
+  private product: IProduct;
 
-  constructor(tagName: string, className: string, cart: IProduct) {
+  constructor(tagName: string, className: string, product: IProduct) {
     super(tagName, className);
-    this.cart = cart;
+    this.product = product;
   }
 
-  generateButton(className: string, content: string, counter?: number): HTMLDivElement {
-    const btnWrapper = document.createElement('div');
+  generateButton(className: string, content: string, counter?: number): HTMLButtonElement {
     const button = document.createElement('button');
-    btnWrapper.classList.add(className);
+    const buttonContainer = document.createElement('div');
+    button.classList.add(className);
 
     const span = document.createElement('span');
     span.textContent = content;
-    button.append(span);
+    buttonContainer.append(span);
     if (Number(counter) >= 0) {
       const counterSpan = document.createElement('i');
       counterSpan.classList.add('product__counter');
       counterSpan.textContent = `(${counter})`;
-      button.append(counterSpan);
+      buttonContainer.append(counterSpan);
+      State.addToElements('counter', counterSpan);
     }
-    btnWrapper.append(button);
-    return btnWrapper;
+    button.append(buttonContainer);
+    return button;
   }
 
   generateProduct(): void {
     // eslint-disable-next-line global-require
-    const img: string = require(`@imgs/${this.cart.img}.webp`);
+    const img: string = require(`@imgs/${this.product.img}.webp`);
 
-    if (this.cart.title) {
+    if (this.product.title) {
       const productImgBlock = document.createElement('div');
       productImgBlock.classList.add('product__img');
 
@@ -44,31 +46,31 @@ class Product extends Component {
 
       const productTitle = document.createElement('h3');
       productTitle.classList.add('product__title');
-      productTitle.textContent = this.cart.title;
+      productTitle.textContent = this.product.title;
 
       const productPrice = document.createElement('p');
       productPrice.classList.add('product__price');
-      productPrice.textContent = `$${this.cart.price}.`;
+      productPrice.textContent = `$${this.product.price}.`;
 
       const productQuantity = document.createElement('p');
       productQuantity.classList.add('product__quantity');
-      productQuantity.textContent = `${this.cart.quantity} шт.`;
+      productQuantity.textContent = `${this.product.quantity} шт.`;
 
       const productWriter = document.createElement('p');
       productWriter.classList.add('product__writer');
-      productWriter.textContent = `Автор: ${this.cart.writer}`;
+      productWriter.textContent = `Автор: ${this.product.writer}`;
 
       const productGenres = document.createElement('ul');
       productGenres.classList.add('product__genres');
-      productGenres.innerHTML = `Жанр: ${this.cart.genres.map((genre) => `<li>${genre}</li>`).join('')}`;
+      productGenres.innerHTML = `Жанр: ${this.product.genres.map((genre) => `<li>${genre}</li>`).join('')}`;
 
       const productYear = document.createElement('p');
       productYear.classList.add('product__publish-date');
-      productYear.textContent = `Год издания: ${this.cart.year}`;
+      productYear.textContent = `Год издания: ${this.product.year}`;
 
       const productCategory = document.createElement('p');
       productCategory.classList.add('product__category');
-      productCategory.textContent = `Категория: ${this.cart.category.join(', ')}`;
+      productCategory.textContent = `Категория: ${this.product.category.join(', ')}`;
 
       productImgBlock.append(productImg);
       productInfo.append(
@@ -82,8 +84,11 @@ class Product extends Component {
       );
       this.container.append(productImgBlock, productInfo);
     }
-    const buttonAdd = this.generateButton('product__button', 'Add to cart', 0);
-    const buttonDel = this.generateButton('product__button', 'Delete from cart');
+    const buttonAdd = this.generateButton('product__button', 'Добавить', 0);
+    const buttonDel = this.generateButton('product__button', 'Удалить');
+
+    State.addToElements('buttonAdd', buttonAdd);
+    State.addToElements('buttonDel', buttonDel);
     this.container.append(buttonAdd, buttonDel);
   }
 

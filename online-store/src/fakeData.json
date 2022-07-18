@@ -148,7 +148,7 @@
     "price": 5.99,
     "year": "September 12, 2018",
     "writer": "Nick Spencer",
-    "img": "spider-man(2018)4",
+    "img": "spider-man(2018)5",
     "description": "Things look bad for Peter Parker…but GREAT for Spider-Man! The first arc of the epic new run on ASM comes to a climactic finish!",
     "rating": 3.43,
     "status": "ongoing"
@@ -562,7 +562,7 @@
   { 
     "id": 41,
     "title": "Cyberpunk 2077: Blackout #1",
-    "genres": ["Action", "Sci-fi", "Video Game"],
+    "genres": ["Action", "Video Game"],
     "quantity": 6,
     "category": ["cyberpunk2077", "other"],
     "price": 3.99,
@@ -576,7 +576,7 @@
   { 
     "id": 42,
     "title": "Cyberpunk 2077: Blackout #2",
-    "genres": ["Action", "Sci-fi", "Video Game"],
+    "genres": ["Action", "Video Game"],
     "quantity": 8,
     "category": ["cyberpunk2077", "other"],
     "price": 3.99,

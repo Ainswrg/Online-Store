@@ -1,11 +1,12 @@
+// import State from '@core/state';
 import { Main, Header, Footer } from '@core/layouts';
-import Component from '@core/templates/component';
+// import Component from '@core/templates/component';
 import Page from '@core/templates/page';
 import { PageIds, ErrorTypes } from '@core/ts/enum';
 import { MainPage, CartPage, ErrorPage } from '@pages/index';
 import data from '@/fakeData.json';
 
-class App extends Component {
+class App {
   private static body: HTMLElement = document.body;
   private static url: string | null = PageIds.Default;
   private static main: Main = new Main('main', 'main');
