@@ -1,3 +1,4 @@
+import State from '@core/state';
 import Component from '@core/templates/component';
 import noUiSlider, { target } from 'noUiSlider';
 
@@ -53,13 +54,33 @@ class RangeFilters extends Component {
     const quantityRange = this.rangeSliderInit(rangeQuantity, inputMinQuantity, inputMaxQuantity, 1, 20);
     const yearsRange = this.rangeSliderInit(rangeYears, inputMinYears, inputMaxYears, 2006, 2022);
 
+    // ToDo Перенести код в отдельный файл
+    const quantityValues: number[] = 'quantity' in localStorage && JSON.parse(localStorage.getItem('quantity') ?? '');
+    const yearsValues: number[] = 'year' in localStorage && JSON.parse(localStorage.getItem('year') ?? '');
+
+    const [minQuantity, maxQuantity] = quantityValues || [0, 20];
+    const [minYears, maxYears] = yearsValues || [2006, 2022];
+
+    inputMinQuantity.value = minQuantity.toString();
+    inputMaxQuantity.value = maxQuantity.toString();
+
+    inputMinYears.value = minYears.toString();
+    inputMaxYears.value = maxYears.toString();
+
+    (rangeQuantity as target).noUiSlider?.set([inputMinQuantity.value, inputMaxQuantity.value]);
+    (rangeYears as target).noUiSlider?.set([inputMinYears.value, inputMaxYears.value]);
+
     rangeValuesQuantity.append(inputMinQuantity, inputMaxQuantity);
     rangeValuesYears.append(inputMinYears, inputMaxYears);
     quantity.append(subtitle, rangeQuantity, rangeValuesQuantity);
     years.append(subtitleYears, rangeYears, rangeValuesYears);
 
-    this.setInputs(quantityRange);
-    this.setInputs(yearsRange);
+    State.addToElements('quantityRange', quantityRange);
+    State.addToElements('yearsRange', yearsRange);
+    State.addToElements('inputMinQuantity', inputMinQuantity);
+    State.addToElements('inputMaxQuantity', inputMaxQuantity);
+    State.addToElements('inputMinYears', inputMinYears);
+    State.addToElements('inputMaxYears', inputMaxYears);
     this.container.append(title, quantity, years);
   }
 
@@ -104,14 +125,6 @@ class RangeFilters extends Component {
     });
 
     return range;
-  }
-
-  getInputs(): Array<HTMLElement> {
-    return this.inputs;
-  }
-
-  setInputs(input: HTMLElement) {
-    this.inputs.push(input);
   }
 
   render() {

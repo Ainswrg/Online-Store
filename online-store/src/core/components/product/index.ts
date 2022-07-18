@@ -84,7 +84,8 @@ class Product extends Component {
       );
       this.container.append(productImgBlock, productInfo);
     }
-    const buttonAdd = this.generateButton('product__button', 'Добавить', 0);
+    const counter = localStorage.getItem(`counter${this.product.id}`) || 0;
+    const buttonAdd = this.generateButton('product__button', 'Добавить', Number(counter));
     const buttonDel = this.generateButton('product__button', 'Удалить');
 
     State.addToElements('buttonAdd', buttonAdd);

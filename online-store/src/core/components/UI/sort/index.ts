@@ -1,3 +1,4 @@
+import State from '@core/state';
 import Component from '@core/templates/component';
 
 class Sort extends Component {
@@ -42,17 +43,23 @@ class Sort extends Component {
       sortSelectOption5,
       sortSelectOption6
     );
-    this.setSelect(sortSelect);
-
+    State.addToElements('sort', sortSelect);
+    const sortedBy = localStorage.getItem('sort') ?? 'name-asc';
+    const options = [
+      sortSelectOption1,
+      sortSelectOption2,
+      sortSelectOption3,
+      sortSelectOption4,
+      sortSelectOption5,
+      sortSelectOption6,
+    ];
+    options.forEach((option) => {
+      if (option.value === sortedBy) {
+        const myOption = option as HTMLOptionElement;
+        myOption.selected = true;
+      }
+    });
     this.container.append(sortTitle, sortSelect);
-  }
-
-  getSelect(): HTMLSelectElement | null {
-    return Sort.select;
-  }
-
-  setSelect(value: HTMLSelectElement | null): void {
-    Sort.select = value;
   }
 
   render() {

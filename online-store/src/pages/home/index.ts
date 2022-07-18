@@ -47,7 +47,7 @@ class MainPage extends Page {
     productsWrapper.classList.add('products__wrapper');
 
     State.elements.set('productsWrapper', productsWrapper);
-    const generateModal = (content: string) => {
+    const generateModal = (content: string, timeout: number) => {
       const { body } = document;
       const modal = new Component('div', 'modal');
       const modalContent = new Component('div', 'modal__content');
@@ -64,7 +64,7 @@ class MainPage extends Page {
         render.classList.remove('modal--active');
         setTimeout(() => {
           render.remove();
-        }, 800);
+        }, timeout);
       });
     };
     const span = State.elements.get('span') as HTMLElement;
@@ -76,24 +76,31 @@ class MainPage extends Page {
       const buttonAdd = State.elements.get('buttonAdd') as HTMLButtonElement;
       const buttonDel = State.elements.get('buttonDel') as HTMLButtonElement;
       const counterSpan = State.elements.get('counter') as HTMLElement;
+      const cartCounter: number | boolean =
+        'cartLength' in localStorage ? Number(localStorage.getItem('cartLength')) : 0;
+
       buttonAdd?.addEventListener('click', () => {
-        const { length } = State.getCart();
-        if (length < 20) {
-          State.addToCart(renderCart);
+        if (cartCounter < 5) {
+          State.addToCart(`renderCart${product.id}`, renderCart);
           counterSpan!.innerHTML = '';
           counterSpan!.textContent = `(1)`;
           span.innerHTML = '';
-          span.textContent = `${length + 1}`;
+          span.textContent = `${State.cart.size}`;
+
+          localStorage.setItem(`counter${product.id}`, `1`);
+          localStorage.setItem(`cartLength`, JSON.stringify(State.cart.size));
         } else {
-          generateModal('Вы не можете добавить больше 20 товаров');
+          generateModal('Вы не можете добавить больше 20 товаров', 700);
         }
       });
       buttonDel?.addEventListener('click', () => {
+        State.cart.delete(`renderCart${product.id}`);
         counterSpan!.innerHTML = '';
         counterSpan!.textContent = `(0)`;
-        State.removeFromCart(renderCart);
         span.innerHTML = '';
-        span.textContent = `${State.getCart().length}`;
+        span.textContent = `${State.cart.size}`;
+        localStorage.removeItem(`counter${product.id}`);
+        localStorage.setItem(`cartLength`, JSON.stringify(State.cart.size));
       });
     });
     return productsWrapper;
@@ -218,7 +225,7 @@ class MainPage extends Page {
     });
   }
 
-  checkButtons(elements: HTMLInputElement[][]) {
+  protected checkButtons(elements: HTMLInputElement[][]) {
     elements.forEach((item) => {
       const [input, label] = item;
       const myTarget = input as HTMLInputElement;

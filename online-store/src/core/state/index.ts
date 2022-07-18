@@ -1,20 +1,16 @@
+import { Product } from '@core/components';
 import { IFiltersType } from '@core/ts/interfaces';
 import { TListenersElements } from '@core/ts/types';
 
 class State {
-  static cart: HTMLElement[] = [];
+  static cart: Map<string, Product | HTMLElement> = new Map();
   static elements: Map<string, TListenersElements | HTMLInputElement[][]> = new Map();
   static filters: IFiltersType[];
 
-  static addToCart(product: HTMLElement) {
-    State.cart.push(product);
+  static addToCart(name: string, element: Product | HTMLElement): void {
+    State.cart.set(name, element);
   }
-  static removeFromCart(product: HTMLElement) {
-    State.cart = State.cart.filter((p) => p.id !== product.id);
-  }
-  static getCart(): HTMLElement[] {
-    return State.cart;
-  }
+
   static addToElements(name: string, element: TListenersElements | HTMLInputElement[][]): void {
     State.elements.set(name, element);
   }

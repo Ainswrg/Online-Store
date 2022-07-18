@@ -54,7 +54,9 @@ class Header extends Component {
         buttonHTML.innerHTML = `${button.text}`;
         const span = document.createElement('span');
         span.classList.add('header__navigation-quantity');
-        span.textContent = `${0}`;
+        const cartCounter: number | boolean =
+          'cartLength' in localStorage ? Number(localStorage.getItem('cartLength')) : 0;
+        span.textContent = `${cartCounter}`;
         State.addToElements('span', span);
         buttonHTML.appendChild(span);
       } else {

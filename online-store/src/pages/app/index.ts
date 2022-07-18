@@ -1,3 +1,4 @@
+import State from '@core/state';
 import { Main, Header, Footer } from '@core/layouts';
 import Page from '@core/templates/page';
 import { PageIds, ErrorTypes } from '@core/ts/enum';
@@ -55,6 +56,8 @@ class App {
     this.generatePage();
     this.enableRouteChange();
     App.renderNewPage('main-page');
+    const search = State.elements.get('search') as HTMLInputElement;
+    search.focus();
   }
 }
 
