@@ -19,6 +19,10 @@ const enum ParamsType {
   popular = 'rating',
   quantity = 'quantity',
   year = 'year',
+  sort = 'sort',
+  search = 'search',
+  resetFilters = 'resetFilters',
+  resetSettings = 'resetSettings',
 }
 
 export { PageIds, Url, ErrorTypes, ParamsType };

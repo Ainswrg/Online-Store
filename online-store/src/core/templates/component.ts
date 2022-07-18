@@ -8,6 +8,9 @@ class Component {
   appendContent(content: HTMLElement) {
     this.container.append(content);
   }
+  appendText(text: string) {
+    this.container.innerText = text;
+  }
   render() {
     return this.container;
   }

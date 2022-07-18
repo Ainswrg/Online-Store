@@ -1,6 +1,8 @@
+import State from '@core/state';
 import Component from '@core/templates/component';
 
 class Buttons extends Component {
+  buttons: HTMLButtonElement[] = [];
   private generateButtons() {
     const buttonResetFilters = document.createElement('button');
     buttonResetFilters.classList.add('settings__button');
@@ -10,6 +12,8 @@ class Buttons extends Component {
     buttonResetSettings.classList.add('settings__button');
     buttonResetSettings.textContent = 'Сбросить Настройки';
 
+    State.addToElements('buttonResetFilters', buttonResetFilters);
+    State.addToElements('buttonResetSettings', buttonResetSettings);
     this.container.append(buttonResetFilters, buttonResetSettings);
   }
 

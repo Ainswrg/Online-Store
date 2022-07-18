@@ -1,15 +1,18 @@
+import State from '@core/state';
 import Component from '@core/templates/component';
 
 class ValueFilters extends Component {
   static inputs: HTMLInputElement[] = [];
   private enableListeners(arr: (HTMLLabelElement | HTMLInputElement)[][]): void {
     const addEListener = (inputElement: Element, labelElement: Element): void => {
-      inputElement.addEventListener('change', (e: Event) => {
-        const myTarget = e.target as HTMLInputElement;
+      inputElement.addEventListener('change', () => {
+        const myTarget = inputElement as HTMLInputElement;
         if (myTarget.checked) {
           labelElement.classList.add('active');
+          localStorage.setItem(`${myTarget.value}-btn`, 'true');
         } else {
           labelElement.classList.remove('active');
+          localStorage.removeItem(`${myTarget.value}-btn`);
         }
       });
     };
@@ -117,29 +120,21 @@ class ValueFilters extends Component {
       [inputPopular, labelPopular],
     ];
     const inputs = [
-      inputMarvel,
-      inputDC,
-      inputOther,
-      inputSuperhero,
-      inputAction,
-      inputScience,
-      inputOngoing,
-      inputCompleted,
-      inputPopular,
+      ['inputMarvel', inputMarvel],
+      ['inputDC', inputDC],
+      ['inputOther', inputOther],
+      ['inputSuperhero', inputSuperhero],
+      ['inputAction', inputAction],
+      ['inputScience', inputScience],
+      ['inputOngoing', inputOngoing],
+      ['inputCompleted', inputCompleted],
+      ['inputPopular', inputPopular],
     ];
     inputs.forEach((input) => {
-      this.setInputs(input);
+      State.addToElements(input[0] as string, input[1] as HTMLInputElement);
     });
-
+    State.addToElements('listeners', listeners as HTMLInputElement[][]);
     this.enableListeners(listeners);
-  }
-
-  getInputs(): HTMLInputElement[] {
-    return ValueFilters.inputs;
-  }
-
-  setInputs(value: HTMLInputElement): void {
-    ValueFilters.inputs.push(value);
   }
 
   render() {

@@ -1,3 +1,4 @@
+import State from '@core/state';
 import Component from '@core/templates/component';
 import { PageIds } from '@core/ts/enum';
 
@@ -50,7 +51,12 @@ class Header extends Component {
       const buttonHTML = document.createElement('a');
       buttonHTML.href = `#${button.id}`;
       if (Number(button.quantity) >= 0) {
-        buttonHTML.innerHTML = `${button.text}<span class="header__navigation-quantity">${button.quantity}</span>`;
+        buttonHTML.innerHTML = `${button.text}`;
+        const span = document.createElement('span');
+        span.classList.add('header__navigation-quantity');
+        span.textContent = `${0}`;
+        State.addToElements('span', span);
+        buttonHTML.appendChild(span);
       } else {
         buttonHTML.innerHTML = button.text;
       }
