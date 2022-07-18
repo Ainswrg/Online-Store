@@ -1,3 +1,4 @@
+import State from '@core/state';
 import Component from '@core/templates/component';
 
 class Search extends Component {
@@ -14,16 +15,9 @@ class Search extends Component {
     searchInput.type = 'text';
     searchInput.placeholder = 'Поиск';
 
-    this.setSearchValue(searchInput);
+    State.addToElements('search', searchInput);
     this.container.append(searchInput);
     return searchInput;
-  }
-
-  public getSearchValue(): HTMLInputElement | null {
-    return this.value;
-  }
-  setSearchValue(value: HTMLInputElement | null): void {
-    this.value = value;
   }
 
   render() {

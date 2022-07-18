@@ -1,3 +1,4 @@
+import { ParamsType } from '@core/ts/enum';
 import { IProduct, IFiltersType } from '@core/ts/interfaces';
 
 class Filter {
@@ -17,39 +18,36 @@ class Filter {
       const genresOrCategory = resGenres.length === 0 ? categoryOrYears : resGenres;
       const statusOrGenres = resStatus.length === 0 ? genresOrCategory : resStatus;
 
-      if (filters.params === 'quantity') {
-        const currentData = data;
-        const [first, second] = filters.value.split(',');
-        resQuantity.push(
-          ...currentData.filter((item) => item.quantity >= Number(first) && item.quantity <= Number(second))
-        );
-      }
-      if (filters.params === 'year') {
-        const currentData = quantityOrArr;
-        const [first, second] = filters.value.split(',');
-        resYears.push(
-          ...currentData.filter(
-            (item) =>
-              new Date(item.year) >= new Date(Number(first), 1, 1) &&
-              new Date(item.year) <= new Date(Number(second), 12, 31)
-          )
-        );
-      }
-      if (filters.params === 'category') {
-        const currentData = yearsOrQuantity;
-        resCategory.push(...currentData.filter((item) => item.category.includes(filters.value)));
-      }
-      if (filters.params === 'genres') {
-        const currentData = categoryOrYears;
-        resGenres.push(...currentData.filter((item) => item.genres.includes(filters.value)));
-      }
-      if (filters.params === 'status') {
-        const currentData = genresOrCategory;
-        resStatus.push(...currentData.filter((item) => item.status.includes(filters.value)));
-      }
-      if (filters.params === 'rating') {
-        const currentData = statusOrGenres;
-        resPopular.push(...currentData.filter((item) => item.rating > 4.5));
+      switch (filters.params) {
+        case ParamsType.quantity: {
+          const [first, second] = filters.value.split(',');
+          resQuantity.push(...data.filter((item) => item.quantity >= Number(first) && item.quantity <= Number(second)));
+          break;
+        }
+        case ParamsType.year: {
+          const [first, second] = filters.value.split(',');
+          resYears.push(
+            ...quantityOrArr.filter(
+              (item) =>
+                new Date(item.year) >= new Date(Number(first), 1, 1) &&
+                new Date(item.year) <= new Date(Number(second), 12, 31)
+            )
+          );
+          break;
+        }
+        case ParamsType.category:
+          resCategory.push(...yearsOrQuantity.filter((item) => item.category.includes(filters.value)));
+          break;
+        case ParamsType.genres:
+          resGenres.push(...categoryOrYears.filter((item) => item.genres.includes(filters.value)));
+          break;
+        case ParamsType.status:
+          resStatus.push(...genresOrCategory.filter((item) => item.status.includes(filters.value)));
+          break;
+        case ParamsType.popular:
+          resPopular.push(...statusOrGenres.filter((item) => item.rating > 4.5));
+          break;
+        default:
       }
     });
 
@@ -101,13 +99,7 @@ class Filter {
 
   filterBySearch = (searchValue: string, data: IProduct[]) => {
     if (searchValue !== '') {
-      const newData = data.filter((obj) => {
-        if (obj.title.toLowerCase().includes(searchValue.toLowerCase())) {
-          return true;
-        }
-        return false;
-      });
-      return newData;
+      return data.filter((obj) => obj.title.toLowerCase().includes(searchValue.toLowerCase()));
     }
     return data;
   };
