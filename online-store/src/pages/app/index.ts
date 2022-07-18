@@ -1,6 +1,4 @@
-// import State from '@core/state';
 import { Main, Header, Footer } from '@core/layouts';
-// import Component from '@core/templates/component';
 import Page from '@core/templates/page';
 import { PageIds, ErrorTypes } from '@core/ts/enum';
 import { MainPage, CartPage, ErrorPage } from '@pages/index';
