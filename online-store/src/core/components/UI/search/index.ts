@@ -10,13 +10,23 @@ class Search extends Component {
   }
 
   generateSearch(): HTMLInputElement {
+    const searchWrapper = document.createElement('div');
+    searchWrapper.classList.add('settings__search-wrapper');
+
     const searchInput = document.createElement('input');
     searchInput.classList.add('settings__search-input');
     searchInput.type = 'text';
     searchInput.placeholder = 'Поиск';
 
+    const closeButton = document.createElement('button');
+    closeButton.classList.add('settings__search-close');
+    closeButton.innerHTML = '&times;';
+    // closeButton.classList.add('settings__search-close_active');
+
     State.addToElements('search', searchInput);
-    this.container.append(searchInput);
+    State.addToElements('searchClose', closeButton);
+    searchWrapper.append(searchInput, closeButton);
+    this.container.append(searchWrapper);
     return searchInput;
   }
 

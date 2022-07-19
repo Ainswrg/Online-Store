@@ -61,6 +61,16 @@
     justify-content: flex-start;
     align-items: center;
     padding: 15px 0px;
+    &-wrapper {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      width: 80%;
+      margin: 0 auto;
+      height: fit-content;
+      position: relative;
+    }
     &-title {
       display: none;
       font-size: 1.2rem;
@@ -68,7 +78,7 @@
       color: $filterTitle;
     }
     &-input {
-      width: 80%;
+      width: 100%;
       margin: 0 auto;
       height: 40px;
       border-radius: 0.25em;
@@ -77,13 +87,30 @@
       font-size: 1.2rem;
       font-weight: bold;
       color: $filterTitle;
-      &:focus {
-        outline: none;
+      position: relative;
+    }
+    &-close {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid $filterTitle;
+      background-color: $labelBackground;
+      z-index: 2;
+      cursor: pointer;
+      display: none;
+      &:hover {
+        background-color: $labelBackgroundActive;
+        color: $labelBackground;
+      }
+      &--active {
+        display: block;
       }
     }
   }
   &__sort {
-    position: relative;
     display: flex;
     justify-content: center;
     align-self: center;
@@ -92,6 +119,7 @@
     border-radius: 0.25em;
     overflow: hidden;
     margin: 0 auto;
+    position: relative;
     &::-ms-expand {
       display: none;
     }

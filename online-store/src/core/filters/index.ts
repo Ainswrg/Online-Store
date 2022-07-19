@@ -123,28 +123,57 @@ class Filters {
       case ParamsType.search:
         args.element.addEventListener('keyup', () => {
           const element = args.element as HTMLInputElement;
-          localStorage.setItem('searchValue', element.value);
+
+          const closeButton: HTMLElement = State.elements.get('searchClose') as HTMLElement;
+          const currSearch = State.elements.get('search') as HTMLInputElement;
+          const searchValue = localStorage.getItem('searchValue') || currSearch.value;
+          if (searchValue !== '') {
+            closeButton.classList.add('settings__search-close--active');
+          } else {
+            closeButton.classList.remove('settings__search-close--active');
+          }
+          closeButton.addEventListener('click', () => {
+            currSearch.value = '';
+            localStorage.removeItem('searchValue');
+            closeButton.classList.remove('settings__search-close--active');
+            this.filterOnPage(wrapperCallback, callbacks, currentData, mySort.value, element.value);
+          });
           this.filterOnPage(wrapperCallback, callbacks, currentData, mySort.value, element.value);
         });
         break;
       case ParamsType.resetFilters:
       case ParamsType.resetSettings: {
         args.element.addEventListener('click', () => {
-          if (args.targetType === 'resetFilters') {
+          if (args.targetType === ParamsType.resetFilters) {
             deleteActiveClass(listeners as (HTMLLabelElement | HTMLInputElement)[][]);
             const inputsAndButtonsElements = [
               // eslint-disable-next-line prettier/prettier
-              'marvel', 'dc', 'other', 'action', 'superhero', 'sci-fi', 'ongoing',
+              'marvel',
+              'dc',
+              'other',
+              'action',
+              'superhero',
+              'sci-fi',
+              'ongoing',
               // eslint-disable-next-line prettier/prettier
-              'completed', 'rating', 'marvel-btn', 'dc-btn', 'other-btn', 'action-btn',
+              'completed',
+              'rating',
+              'marvel-btn',
+              'dc-btn',
+              'other-btn',
+              'action-btn',
               // eslint-disable-next-line prettier/prettier
-              'superhero-btn', 'sci-fi-btn', 'ongoing-btn', 'completed-btn', 'rating-btn'
+              'superhero-btn',
+              'sci-fi-btn',
+              'ongoing-btn',
+              'completed-btn',
+              'rating-btn',
             ];
             inputsAndButtonsElements.forEach((el) => {
               localStorage.removeItem(el);
             });
           }
-          if (args.targetType === 'resetSettings') {
+          if (args.targetType === ParamsType.resetSettings) {
             localStorage.clear();
             window.location.reload();
           }
@@ -176,6 +205,18 @@ class Filters {
     const search = State.elements.get('search') as HTMLInputElement;
     search.value = searchValue;
     search.focus();
+
+    // const closeButton: HTMLElement = State.elements.get('searchClose') as HTMLElement;
+    // if (searchValue !== '') {
+    //   closeButton.classList.add('settings__search-close--active');
+    // } else {
+    //   closeButton.classList.remove('settings__search-close--active');
+    // }
+    // closeButton.addEventListener('click', () => {
+    //   search.value = '';
+    //   search.required = true;
+    //   localStorage.removeItem('searchValue');
+    // });
 
     const filteredData = this.filter.filterData(data, this.filters);
     const sortedBy = localStorage.getItem('sort') ?? targetSort;
