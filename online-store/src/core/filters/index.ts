@@ -132,6 +132,7 @@ class Filters {
           } else {
             closeButton.classList.remove('settings__search-close--active');
           }
+          localStorage.setItem('searchValue', element.value);
           closeButton.addEventListener('click', () => {
             currSearch.value = '';
             localStorage.removeItem('searchValue');
@@ -206,22 +207,17 @@ class Filters {
     search.value = searchValue;
     search.focus();
 
-    // const closeButton: HTMLElement = State.elements.get('searchClose') as HTMLElement;
-    // if (searchValue !== '') {
-    //   closeButton.classList.add('settings__search-close--active');
-    // } else {
-    //   closeButton.classList.remove('settings__search-close--active');
-    // }
-    // closeButton.addEventListener('click', () => {
-    //   search.value = '';
-    //   search.required = true;
-    //   localStorage.removeItem('searchValue');
-    // });
-
     const filteredData = this.filter.filterData(data, this.filters);
     const sortedBy = localStorage.getItem('sort') ?? targetSort;
     const sortedData = this.sort.sortData(filteredData, sortedBy);
     const filteredByAll = this.filter.filterBySearch(searchValue, sortedData);
+
+    const closeButton: HTMLElement = State.elements.get('searchClose') as HTMLElement;
+    if (searchValue !== '') {
+      closeButton.classList.add('settings__search-close--active');
+    } else {
+      closeButton.classList.remove('settings__search-close--active');
+    }
 
     generateProduct(callbacks, filteredByAll);
     if (searchValue !== '' && filteredByAll.length === 0) {
