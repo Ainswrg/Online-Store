@@ -16,7 +16,7 @@ class Settings extends Component {
     this.container.append(filters.render());
   }
 
-  generateSorting() {
+  generateSorting(): void {
     const filters = document.createElement('div');
     filters.classList.add('settings__filters');
 

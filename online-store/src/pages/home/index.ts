@@ -76,12 +76,18 @@ class MainPage extends Page {
       const buttonAdd = State.elements.get('buttonAdd') as HTMLButtonElement;
       const buttonDel = State.elements.get('buttonDel') as HTMLButtonElement;
       const counterSpan = State.elements.get('counter') as HTMLElement;
-      const cartCounter: number | boolean =
-        'cartLength' in localStorage ? Number(localStorage.getItem('cartLength')) : 0;
-
+      if (`productCart${product.id}` in localStorage) {
+        if (!State.cart.has(`productCart${product.id}`)) {
+          State.addToCart(`productCart${product.id}`, productCart);
+        }
+      }
       buttonAdd?.addEventListener('click', () => {
-        if (cartCounter < 5) {
-          State.addToCart(`renderCart${product.id}`, renderCart);
+        const cartCounter: number | boolean =
+          'cartLength' in localStorage ? Number(localStorage.getItem('cartLength')) : State.cart.size;
+
+        if (cartCounter < 20) {
+          State.addToCart(`productCart${product.id}`, productCart);
+          localStorage.setItem(`productCart${product.id}`, JSON.stringify(productCart));
           counterSpan!.innerHTML = '';
           counterSpan!.textContent = `(1)`;
           span.innerHTML = '';
@@ -94,7 +100,8 @@ class MainPage extends Page {
         }
       });
       buttonDel?.addEventListener('click', () => {
-        State.cart.delete(`renderCart${product.id}`);
+        State.cart.delete(`productCart${product.id}`);
+        localStorage.removeItem(`productCart${product.id}`);
         counterSpan!.innerHTML = '';
         counterSpan!.textContent = `(0)`;
         span.innerHTML = '';

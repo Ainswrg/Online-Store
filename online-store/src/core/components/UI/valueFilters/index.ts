@@ -3,7 +3,7 @@ import Component from '@core/templates/component';
 
 class ValueFilters extends Component {
   static inputs: HTMLInputElement[] = [];
-  private enableListeners(arr: (HTMLLabelElement | HTMLInputElement)[][]): void {
+  enableListeners(arr: (HTMLInputElement | HTMLLabelElement)[][]): void {
     const addEListener = (inputElement: Element, labelElement: Element): void => {
       inputElement.addEventListener('change', () => {
         const myTarget = inputElement as HTMLInputElement;
@@ -21,7 +21,7 @@ class ValueFilters extends Component {
     });
   }
 
-  private createInput = (value: string, name: string): HTMLInputElement => {
+  createInput = (value: string, name: string): HTMLInputElement => {
     const input = document.createElement('input');
     input.type = 'checkbox';
     input.classList.add('settings__input');
@@ -29,14 +29,14 @@ class ValueFilters extends Component {
     input.value = value;
     return input;
   };
-  private createLabel = (value: string): HTMLLabelElement => {
+  createLabel = (value: string): HTMLLabelElement => {
     const label = document.createElement('label');
     label.classList.add('settings__label');
     label.textContent = value;
     return label;
   };
 
-  private generateFilters(): void {
+  generateFilters(): void {
     const title = document.createElement('h2');
     title.classList.add('settings__title');
     title.textContent = 'Фильтры по значению';

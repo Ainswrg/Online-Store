@@ -1,6 +1,6 @@
 import State from '@core/state';
-import Component from '@core/templates/component';
 import { IProduct } from '@core/ts/interfaces';
+import Component from '@core/templates/component';
 
 class Product extends Component {
   private product: IProduct;

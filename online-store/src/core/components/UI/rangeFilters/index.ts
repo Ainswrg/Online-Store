@@ -4,7 +4,7 @@ import noUiSlider, { target } from 'noUiSlider';
 
 class RangeFilters extends Component {
   inputs: HTMLElement[] = [];
-  private generateFilters(): void {
+  generateFilters(): void {
     const title = document.createElement('h2');
     title.classList.add('settings__title');
     title.textContent = 'Фильтры по значению';
@@ -84,7 +84,7 @@ class RangeFilters extends Component {
     this.container.append(title, quantity, years);
   }
 
-  private rangeSliderInit(
+  rangeSliderInit(
     range: target,
     inputMin: HTMLInputElement,
     inputMax: HTMLInputElement,

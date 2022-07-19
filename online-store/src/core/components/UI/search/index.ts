@@ -21,7 +21,6 @@ class Search extends Component {
     const closeButton = document.createElement('button');
     closeButton.classList.add('settings__search-close');
     closeButton.innerHTML = '&times;';
-    // closeButton.classList.add('settings__search-close_active');
 
     State.addToElements('search', searchInput);
     State.addToElements('searchClose', closeButton);
