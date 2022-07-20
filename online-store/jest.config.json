@@ -1,0 +1,21 @@
+{
+  "preset": "ts-jest",
+  "testEnvironment": "jsdom",
+  "transform": {
+    "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js",
+    ".+\\.(css|scss|png|webp|jpg|svg)$": "jest-transform-stub"
+  },
+  "roots": ["<rootDir>/src"],
+  "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+  "moduleDirectories": [
+    "node_modules",
+    "src",
+    "assets"
+  ],
+  "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json"],
+  "moduleNameMapper": {
+    "^@/(.*)$": "<rootDir>/src/$1",
+    "^@core/(.*)$": "<rootDir>/src/core/$1",
+    "^@imgs/(.*)$": "<rootDir>/src/assets/images/$1"
+  }
+}

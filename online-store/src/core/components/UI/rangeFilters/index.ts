@@ -67,8 +67,10 @@ class RangeFilters extends Component {
     inputMinYears.value = minYears.toString();
     inputMaxYears.value = maxYears.toString();
 
-    (rangeQuantity as target).noUiSlider?.set([inputMinQuantity.value, inputMaxQuantity.value]);
-    (rangeYears as target).noUiSlider?.set([inputMinYears.value, inputMaxYears.value]);
+    const checkRangeSliders = (range: target, min: HTMLInputElement, max: HTMLInputElement): void => {
+      range.noUiSlider!.set([min.value, max.value]);
+    };
+    checkRangeSliders(quantityRange, inputMinQuantity, inputMaxQuantity);
 
     rangeValuesQuantity.append(inputMinQuantity, inputMaxQuantity);
     rangeValuesYears.append(inputMinYears, inputMaxYears);
@@ -103,7 +105,7 @@ class RangeFilters extends Component {
       },
       step: 1,
       format: {
-        to: (value: number): number => {
+        to: (value: number): string | number => {
           return Math.round(value);
         },
         from: (value: string): number | false => {
@@ -113,7 +115,7 @@ class RangeFilters extends Component {
     });
 
     range.noUiSlider!.on('update', (values: (string | number)[], handle: number) => {
-      (inputs[handle].value as string | number) = values[handle];
+      inputs[handle].value = values[handle].toString();
     });
 
     inputMin.addEventListener('change', () => {

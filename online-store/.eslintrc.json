@@ -23,7 +23,7 @@
     "rules": {
       "prettier/prettier": "warn",
       "no-debugger": "off",
-      "no-console": 1,
+      "no-console": "error",
       "class-methods-use-this": "off",
       "@typescript-eslint/no-explicit-any": "error",
       "@typescript-eslint/lines-between-class-members": "off",

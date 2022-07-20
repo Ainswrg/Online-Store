@@ -1,7 +1,7 @@
 const path = require('path');
 const { merge } = require('webpack-merge');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 const baseConfig = {
   entry: './src/index.ts',
@@ -17,7 +17,7 @@ const baseConfig = {
         test: /\.(?:ico|gif|jpg|png|mp4|webp)$/i,
         type: 'asset/resource',
         generator: {
-          filename: 'assets/images/[hash][ext]'
+          filename: 'assets/images/[hash][ext]',
         },
       },
       {
@@ -41,9 +41,7 @@ const baseConfig = {
   },
   resolve: {
     extensions: ['.ts', '.js'],
-    plugins: [
-      new TsconfigPathsPlugin()
-    ],
+    plugins: [new TsconfigPathsPlugin()],
     alias: {
       '@imgs': path.resolve(__dirname, 'src/assets/images'),
     },
@@ -57,9 +55,7 @@ const baseConfig = {
 
 module.exports = ({ mode }) => {
   const isProductionMode = mode === 'prod';
-  const envConfig = isProductionMode
-    ? require('./webpack.prod.config')
-    : require('./webpack.dev.config');
+  const envConfig = isProductionMode ? require('./webpack.prod.config') : require('./webpack.dev.config');
 
   return merge(baseConfig, envConfig);
 };
