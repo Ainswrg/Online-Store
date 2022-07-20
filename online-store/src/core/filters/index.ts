@@ -10,11 +10,9 @@ type TGetRes = number | string | (string | number)[];
 
 // ToDo разбить на модули
 class Filters {
-  filters: IFiltersType[];
   filter: Filter;
   sort: Sort;
   constructor() {
-    this.filters = [];
     this.filter = new Filter();
     this.sort = new Sort();
   }
@@ -40,7 +38,7 @@ class Filters {
       };
       const ids = [3, 4, 5, 6];
       ids.forEach((id: number) => {
-        this.filters = this.filters.filter((el) => el.id !== id);
+        State.filters = State.filters.filter((el) => el.id !== id);
       });
       arr.forEach(([input, label]) => {
         addEListener(input as HTMLInputElement, label);
@@ -53,27 +51,27 @@ class Filters {
         if (targetElement.checked) {
           const filtersType = { id, params: paramsType, value: valueUppercase };
           localStorage.setItem(targetElement.value, JSON.stringify(filtersType));
-          this.filters.push(filtersType);
+          State.addToFilters(filtersType);
         } else {
           localStorage.removeItem(targetElement.value);
-          this.filters = this.filters.filter((el) => el.value !== valueUppercase);
+          State.removeFromFilters(valueUppercase);
         }
       } else if (targetElement.checked) {
         const filtersType = { id, params: paramsType, value: targetElement.value };
         localStorage.setItem(targetElement.value, JSON.stringify(filtersType));
-        this.filters.push(filtersType);
+        State.addToFilters(filtersType);
       } else {
         localStorage.removeItem(targetElement.value);
-        this.filters = this.filters.filter((el) => el.value !== targetElement.value);
+        State.removeFromFilters(targetElement.value);
       }
     };
     const isUpdated = (value: TGetRes | undefined, id: number, paramsType: string) => {
-      this.filters = this.filters.filter((el) => el.params !== paramsType);
+      State.removeFromFilters(paramsType, 'params');
       const filter: IFiltersType = { id, params: paramsType, value: `${value}` };
 
-      this.filters.push(filter);
+      State.addToFilters(filter);
     };
-
+    console.log(args.targetType)
     switch (args.targetType) {
       case ParamsType.category:
       case ParamsType.status:
@@ -120,12 +118,12 @@ class Filters {
           this.filterOnPage(wrapperCallback, callbacks, currentData, element.value, mySearch.value);
         });
         break;
-      case ParamsType.search:
-        args.element.addEventListener('keyup', () => {
-          const element = args.element as HTMLInputElement;
+      case ParamsType.search: {
+        const closeButton: HTMLElement = State.elements.get('searchClose') as HTMLElement;
+        const currSearch = State.elements.get('search') as HTMLInputElement;
+        const element = args.element as HTMLInputElement;
 
-          const closeButton: HTMLElement = State.elements.get('searchClose') as HTMLElement;
-          const currSearch = State.elements.get('search') as HTMLInputElement;
+        args.element.addEventListener('keyup', () => {
           const searchValue = localStorage.getItem('searchValue') || currSearch.value;
           if (searchValue !== '') {
             closeButton.classList.add('settings__search-close--active');
@@ -133,22 +131,23 @@ class Filters {
             closeButton.classList.remove('settings__search-close--active');
           }
           localStorage.setItem('searchValue', element.value);
-          closeButton.addEventListener('click', () => {
-            currSearch.value = '';
-            localStorage.removeItem('searchValue');
-            closeButton.classList.remove('settings__search-close--active');
-            this.filterOnPage(wrapperCallback, callbacks, currentData, mySort.value, element.value);
-          });
+          this.filterOnPage(wrapperCallback, callbacks, currentData, mySort.value, element.value);
+        });
+
+        closeButton.addEventListener('click', () => {
+          currSearch.value = '';
+          localStorage.removeItem('searchValue');
+          closeButton.classList.remove('settings__search-close--active');
           this.filterOnPage(wrapperCallback, callbacks, currentData, mySort.value, element.value);
         });
         break;
+      }
       case ParamsType.resetFilters:
       case ParamsType.resetSettings: {
         args.element.addEventListener('click', () => {
           if (args.targetType === ParamsType.resetFilters) {
             deleteActiveClass(listeners as (HTMLLabelElement | HTMLInputElement)[][]);
             const inputsAndButtonsElements = [
-              // eslint-disable-next-line prettier/prettier
               'marvel',
               'dc',
               'other',
@@ -156,14 +155,12 @@ class Filters {
               'superhero',
               'sci-fi',
               'ongoing',
-              // eslint-disable-next-line prettier/prettier
               'completed',
               'rating',
               'marvel-btn',
               'dc-btn',
               'other-btn',
               'action-btn',
-              // eslint-disable-next-line prettier/prettier
               'superhero-btn',
               'sci-fi-btn',
               'ongoing-btn',
@@ -201,13 +198,13 @@ class Filters {
         filtersFromLocal.push(input);
       }
     });
-    this.filters = filtersFromLocal.length === 0 ? this.filters : filtersFromLocal;
+    State.syncFiltersWithLocalStorage(filtersFromLocal);
     const searchValue = localStorage.getItem('searchValue') || targetSearch;
     const search = State.elements.get('search') as HTMLInputElement;
     search.value = searchValue;
     search.focus();
 
-    const filteredData = this.filter.filterData(data, this.filters);
+    const filteredData = this.filter.filterData(data, State.filters);
     const sortedBy = localStorage.getItem('sort') ?? targetSort;
     const sortedData = this.sort.sortData(filteredData, sortedBy);
     const filteredByAll = this.filter.filterBySearch(searchValue, sortedData);

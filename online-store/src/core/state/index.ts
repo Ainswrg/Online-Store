@@ -5,12 +5,17 @@ import { TListenersElements } from '@core/ts/types';
 class State {
   static cart: Map<string, Product | HTMLElement> = new Map();
   static elements: Map<string, TListenersElements | HTMLInputElement[][]> = new Map();
-  static filters: IFiltersType[];
+  static filters: IFiltersType[] = [];
 
   static addToCart(name: string, element: Product | HTMLElement): void {
     State.cart.set(name, element);
   }
-
+  static removeFromCart(name: string): void {
+    State.cart.delete(name);
+  }
+  static getCart(): Map<string, Product | HTMLElement> {
+    return State.cart;
+  }
   static addToElements(name: string, element: TListenersElements | HTMLInputElement[][]): void {
     State.elements.set(name, element);
   }
@@ -18,13 +23,18 @@ class State {
     return State.elements;
   }
   static addToFilters(filter: IFiltersType): void {
-    State.filters.push(filter);
+    this.filters?.push(filter);
   }
   static getFilters(): IFiltersType[] {
-    return State.filters;
+    return this.filters;
   }
-  static removeFromFilters(filter: string): void {
-    State.filters = State.filters.filter((f) => f.params !== filter);
+  static removeFromFilters(filter: string, type = 'value'): void {
+    this.filters = this.filters.filter((f) => (type === 'value' ? f.value !== filter : f.params !== filter));
+  }
+  static syncFiltersWithLocalStorage(filtersFromLocal: IFiltersType[]): void {
+    if (filtersFromLocal.length !== 0) {
+      this.filters = filtersFromLocal;
+    }
   }
 }
 
