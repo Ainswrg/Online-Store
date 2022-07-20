@@ -71,7 +71,6 @@ class Filters {
 
       State.addToFilters(filter);
     };
-    console.log(args.targetType)
     switch (args.targetType) {
       case ParamsType.category:
       case ParamsType.status:
