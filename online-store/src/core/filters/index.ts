@@ -8,7 +8,6 @@ import Filter from './filter';
 
 type TGetRes = number | string | (string | number)[];
 
-// ToDo разбить на модули
 class Filters {
   filter: Filter;
   sort: Sort;
@@ -68,6 +67,7 @@ class Filters {
     const isUpdated = (value: TGetRes | undefined, id: number, paramsType: string) => {
       State.removeFromFilters(paramsType, 'params');
       const filter: IFiltersType = { id, params: paramsType, value: `${value}` };
+      localStorage.setItem(`${paramsType}Filter`, JSON.stringify(filter));
 
       State.addToFilters(filter);
     };
@@ -189,7 +189,19 @@ class Filters {
     targetSort: string,
     targetSearch: string
   ) {
-    const inputsElements = ['marvel', 'dc', 'other', 'action', 'superhero', 'sci-fi', 'ongoing', 'completed', 'rating'];
+    const inputsElements = [
+      'quantityFilter',
+      'yearFilter',
+      'marvel',
+      'dc',
+      'other',
+      'action',
+      'superhero',
+      'sci-fi',
+      'ongoing',
+      'completed',
+      'rating',
+    ];
     const filtersFromLocal: IFiltersType[] = [];
     inputsElements.forEach((el) => {
       if (el in localStorage) {
@@ -216,13 +228,16 @@ class Filters {
     }
 
     generateProduct(callbacks, filteredByAll);
-    if (searchValue !== '' && filteredByAll.length === 0) {
-      const products = State.elements.get('productsWrapper') as HTMLElement;
-      const h2 = document.createElement('h2');
-      h2.classList.add('products__title');
-      h2.innerText = 'Ничего не найдено';
-      products.append(h2);
-    }
+    const notFound = (searchedValue: string, arr: IProduct[]) => {
+      if ((searchedValue !== '' && arr.length === 0) || arr.length === 0) {
+        const products = State.elements.get('productsWrapper') as HTMLElement;
+        const h2 = document.createElement('h2');
+        h2.classList.add('products__title');
+        h2.innerText = 'Ничего не найдено';
+        products.append(h2);
+      }
+    };
+    notFound(searchValue, filteredByAll);
   }
 }
 
