@@ -35,7 +35,7 @@ class Filters {
       const addEListener = (inputElement: HTMLInputElement, labelElement: Element): void => {
         labelElement.classList.remove('active');
       };
-      const ids = [3, 4, 5, 6];
+      const ids = [1, 2, 3, 4, 5, 6];
       ids.forEach((id: number) => {
         State.filters = State.filters.filter((el) => el.id !== id);
       });
@@ -65,11 +65,10 @@ class Filters {
       }
     };
     const isUpdated = (value: TGetRes | undefined, id: number, paramsType: string) => {
+      const filterType: IFiltersType = { id, params: paramsType, value: `${value}` };
       State.removeFromFilters(paramsType, 'params');
-      const filter: IFiltersType = { id, params: paramsType, value: `${value}` };
-      localStorage.setItem(`${paramsType}Filter`, JSON.stringify(filter));
-
-      State.addToFilters(filter);
+      localStorage.setItem(`${paramsType}Filter`, JSON.stringify(filterType));
+      State.addToFilters(filterType);
     };
     switch (args.targetType) {
       case ParamsType.category:
@@ -165,10 +164,19 @@ class Filters {
               'ongoing-btn',
               'completed-btn',
               'rating-btn',
+              'quantity',
+              'year',
+              'yearFilter',
+              'quantityFilter',
             ];
             inputsAndButtonsElements.forEach((el) => {
               localStorage.removeItem(el);
             });
+            const quantityRange = State.elements.get('quantityRange');
+            const yearsRange = State.elements.get('yearsRange');
+
+            (quantityRange as target).noUiSlider?.set([0, 20]);
+            (yearsRange as target).noUiSlider?.set([2006, 2022]);
           }
           if (args.targetType === ParamsType.resetSettings) {
             localStorage.clear();
@@ -226,7 +234,6 @@ class Filters {
     } else {
       closeButton.classList.remove('settings__search-close--active');
     }
-
     generateProduct(callbacks, filteredByAll);
     const notFound = (searchedValue: string, arr: IProduct[]) => {
       if ((searchedValue !== '' && arr.length === 0) || arr.length === 0) {

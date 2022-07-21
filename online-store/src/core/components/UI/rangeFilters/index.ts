@@ -1,6 +1,7 @@
 import State from '@core/state';
 import Component from '@core/templates/component';
 import noUiSlider, { target } from 'noUiSlider';
+import InitSliders from './InitSliders';
 
 class RangeFilters extends Component {
   inputs: HTMLElement[] = [];
@@ -51,8 +52,8 @@ class RangeFilters extends Component {
     const rangeYears = document.createElement('div');
     rangeYears.classList.add('range__slider');
 
-    const quantityRange = this.rangeSliderInit(rangeQuantity, inputMinQuantity, inputMaxQuantity, 1, 20);
-    const yearsRange = this.rangeSliderInit(rangeYears, inputMinYears, inputMaxYears, 2006, 2022);
+    // const quantityRange = this.rangeSliderInit(rangeQuantity, inputMinQuantity, inputMaxQuantity, 1, 20);
+    // const yearsRange = this.rangeSliderInit(rangeYears, inputMinYears, inputMaxYears, 2006, 2022);
 
     // ToDo Перенести код в отдельный файл
     const quantityValues: number[] = 'quantity' in localStorage && JSON.parse(localStorage.getItem('quantity') ?? '');
@@ -67,15 +68,16 @@ class RangeFilters extends Component {
     inputMinYears.value = minYears.toString();
     inputMaxYears.value = maxYears.toString();
 
-    const checkRangeSliders = (range: target, min: HTMLInputElement, max: HTMLInputElement): void => {
-      range.noUiSlider!.set([min.value, max.value]);
-    };
-    checkRangeSliders(quantityRange, inputMinQuantity, inputMaxQuantity);
-
     rangeValuesQuantity.append(inputMinQuantity, inputMaxQuantity);
     rangeValuesYears.append(inputMinYears, inputMaxYears);
     quantity.append(subtitle, rangeQuantity, rangeValuesQuantity);
     years.append(subtitleYears, rangeYears, rangeValuesYears);
+
+    const yearsSlider = new InitSliders(rangeYears, inputMinYears, inputMaxYears, yearsValues, [2006, 2022]);
+    const quantitySlider = new InitSliders(rangeQuantity, inputMinQuantity, inputMaxQuantity, quantityValues, [1, 20]);
+
+    const quantityRange = quantitySlider.init();
+    const yearsRange = yearsSlider.init();
 
     State.addToElements('quantityRange', quantityRange);
     State.addToElements('yearsRange', yearsRange);
@@ -83,6 +85,8 @@ class RangeFilters extends Component {
     State.addToElements('inputMaxQuantity', inputMaxQuantity);
     State.addToElements('inputMinYears', inputMinYears);
     State.addToElements('inputMaxYears', inputMaxYears);
+    State.addToElements('rangeQuantity', rangeQuantity);
+    State.addToElements('rangeYears', rangeYears);
     this.container.append(title, quantity, years);
   }
 
@@ -94,7 +98,6 @@ class RangeFilters extends Component {
     max: number
   ): target {
     const inputs: Array<HTMLInputElement> = [inputMin, inputMax];
-
     noUiSlider.create(range, {
       start: [min, max],
       connect: true,

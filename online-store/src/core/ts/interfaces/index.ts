@@ -38,4 +38,14 @@ interface IFilterValues {
   value: string;
 }
 
-export { IProduct, IValueFilterEnable, ICallbacks, IFiltersType, IFilterValues };
+interface IResult {
+  data: IProduct[];
+  resQuantity: IProduct[];
+  resYears: IProduct[];
+  resCategory: IProduct[];
+  resGenres: IProduct[];
+  resStatus: IProduct[];
+  resPopular: IProduct[];
+}
+
+export { IProduct, IValueFilterEnable, ICallbacks, IFiltersType, IFilterValues, IResult };
