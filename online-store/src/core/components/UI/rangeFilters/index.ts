@@ -1,6 +1,5 @@
 import State from '@core/state';
 import Component from '@core/templates/component';
-import noUiSlider, { target } from 'noUiSlider';
 import InitSliders from './InitSliders';
 
 class RangeFilters extends Component {
@@ -52,9 +51,6 @@ class RangeFilters extends Component {
     const rangeYears = document.createElement('div');
     rangeYears.classList.add('range__slider');
 
-    // const quantityRange = this.rangeSliderInit(rangeQuantity, inputMinQuantity, inputMaxQuantity, 1, 20);
-    // const yearsRange = this.rangeSliderInit(rangeYears, inputMinYears, inputMaxYears, 2006, 2022);
-
     // ToDo Перенести код в отдельный файл
     const quantityValues: number[] = 'quantity' in localStorage && JSON.parse(localStorage.getItem('quantity') ?? '');
     const yearsValues: number[] = 'year' in localStorage && JSON.parse(localStorage.getItem('year') ?? '');
@@ -88,48 +84,6 @@ class RangeFilters extends Component {
     State.addToElements('rangeQuantity', rangeQuantity);
     State.addToElements('rangeYears', rangeYears);
     this.container.append(title, quantity, years);
-  }
-
-  rangeSliderInit(
-    range: target,
-    inputMin: HTMLInputElement,
-    inputMax: HTMLInputElement,
-    min: number,
-    max: number
-  ): target {
-    const inputs: Array<HTMLInputElement> = [inputMin, inputMax];
-    noUiSlider.create(range, {
-      start: [min, max],
-      connect: true,
-      padding: 0,
-      range: {
-        min,
-        max,
-      },
-      step: 1,
-      format: {
-        to: (value: number): string | number => {
-          return Math.round(value);
-        },
-        from: (value: string): number | false => {
-          return Math.round(+value);
-        },
-      },
-    });
-
-    range.noUiSlider!.on('update', (values: (string | number)[], handle: number) => {
-      inputs[handle].value = values[handle].toString();
-    });
-
-    inputMin.addEventListener('change', () => {
-      range.noUiSlider!.set([inputMin.value, inputMax.value]);
-    });
-
-    inputMax.addEventListener('change', () => {
-      range.noUiSlider!.set([inputMin.value, inputMax.value]);
-    });
-
-    return range;
   }
 
   render() {

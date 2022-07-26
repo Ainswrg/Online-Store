@@ -19,7 +19,7 @@ class Product extends Component {
     span.textContent = content;
     buttonContainer.append(span);
     if (Number(counter) >= 0) {
-      const counterSpan = document.createElement('i');
+      const counterSpan = document.createElement('span');
       counterSpan.classList.add('product__counter');
       counterSpan.textContent = `(${counter})`;
       buttonContainer.append(counterSpan);

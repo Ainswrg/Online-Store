@@ -20,7 +20,13 @@ class InitSliders {
     this.rangeValues = rangeValues;
   }
 
-  check(range: target, min: HTMLInputElement, max: HTMLInputElement, values: number[], rangeValues: number[]) {
+  setCurrentValues(
+    range: target,
+    min: HTMLInputElement,
+    max: HTMLInputElement,
+    values: number[],
+    rangeValues: number[]
+  ) {
     const [minV, maxV] = values || rangeValues;
     this.inputMin.value = minV.toString();
     this.inputMax.value = maxV.toString();
@@ -72,7 +78,7 @@ class InitSliders {
   init() {
     const currRange = this.rangeSliderInit(this.range, this.inputMin, this.inputMax, this.rangeValues);
 
-    this.check(currRange, this.inputMin, this.inputMax, this.values, this.rangeValues);
+    this.setCurrentValues(currRange, this.inputMin, this.inputMax, this.values, this.rangeValues);
     return currRange;
   }
 }
