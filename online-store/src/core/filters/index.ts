@@ -20,17 +20,20 @@ class Filters {
     args: IValueFilterEnable,
     callbacks: ICallbacks,
     wrapperCallback: (callbacks: ICallbacks, data: IProduct[]) => HTMLElement,
-    sort: TListenersElements | undefined,
-    search: TListenersElements | undefined
+    sort: TListenersElements,
+    search: TListenersElements
   ): void {
-    const myTarget = args.element as HTMLInputElement;
+    if (!(sort instanceof HTMLSelectElement)) {
+      throw new Error('sort is not HTMLInputElement');
+    }
+    if (!(search instanceof HTMLInputElement)) {
+      throw new Error('search is not HTMLInputElement');
+    }
+    const myTarget = args.element;
     const targetFilter = args.targetType;
-    const mySort = sort as HTMLSelectElement;
-    const mySearch = search as HTMLInputElement;
-
     const listeners = State.elements.get('listeners');
-
     const currentData = args.data;
+
     const deleteActiveClass = (arr: (HTMLLabelElement | HTMLInputElement)[][]): void => {
       const addEListener = (inputElement: HTMLInputElement, labelElement: Element): void => {
         labelElement.classList.remove('active');
@@ -44,7 +47,7 @@ class Filters {
       });
     };
 
-    const isChecked = (targetElement: HTMLInputElement, id: number, paramsType: string) => {
+    const isCheckedInputs = (targetElement: HTMLInputElement, id: number, paramsType: string) => {
       if (targetElement.name === ParamsType.genres) {
         const valueUppercase = targetElement.value[0].toUpperCase() + targetElement.value.slice(1);
         if (targetElement.checked) {
@@ -77,18 +80,30 @@ class Filters {
       case ParamsType.popular: {
         args.element.addEventListener('change', () => {
           if (targetFilter === ParamsType.category) {
-            isChecked(myTarget, 3, ParamsType.category);
+            if (!(myTarget instanceof HTMLInputElement)) {
+              throw new Error('element is not HTMLInputElement');
+            }
+            isCheckedInputs(myTarget, 3, ParamsType.category);
           }
           if (targetFilter === ParamsType.genres) {
-            isChecked(myTarget, 4, ParamsType.genres);
+            if (!(myTarget instanceof HTMLInputElement)) {
+              throw new Error('element is not HTMLInputElement');
+            }
+            isCheckedInputs(myTarget, 4, ParamsType.genres);
           }
           if (targetFilter === ParamsType.status) {
-            isChecked(myTarget, 5, ParamsType.status);
+            if (!(myTarget instanceof HTMLInputElement)) {
+              throw new Error('element is not HTMLInputElement');
+            }
+            isCheckedInputs(myTarget, 5, ParamsType.status);
           }
           if (targetFilter === ParamsType.popular) {
-            isChecked(myTarget, 6, ParamsType.popular);
+            if (!(myTarget instanceof HTMLInputElement)) {
+              throw new Error('element is not HTMLInputElement');
+            }
+            isCheckedInputs(myTarget, 6, ParamsType.popular);
           }
-          this.filterOnPage(wrapperCallback, callbacks, currentData, mySort.value, mySearch.value);
+          this.generateFilteredDataOnPage(wrapperCallback, callbacks, currentData, sort.value, search.value);
         });
         break;
       }
@@ -105,7 +120,7 @@ class Filters {
             isUpdated(value, 2, ParamsType.year);
             localStorage.setItem('year', JSON.stringify(value));
           }
-          this.filterOnPage(wrapperCallback, callbacks, currentData, mySort.value, mySearch.value);
+          this.generateFilteredDataOnPage(wrapperCallback, callbacks, currentData, sort.value, search.value);
         });
         break;
       }
@@ -113,7 +128,7 @@ class Filters {
         args.element.addEventListener('change', () => {
           const element = args.element as HTMLSelectElement;
           localStorage.setItem('sort', element.value);
-          this.filterOnPage(wrapperCallback, callbacks, currentData, element.value, mySearch.value);
+          this.generateFilteredDataOnPage(wrapperCallback, callbacks, currentData, element.value, search.value);
         });
         break;
       case ParamsType.search: {
@@ -129,14 +144,14 @@ class Filters {
             closeButton.classList.remove('settings__search-close--active');
           }
           localStorage.setItem('searchValue', element.value);
-          this.filterOnPage(wrapperCallback, callbacks, currentData, mySort.value, element.value);
+          this.generateFilteredDataOnPage(wrapperCallback, callbacks, currentData, sort.value, element.value);
         });
 
         closeButton.addEventListener('click', () => {
           currSearch.value = '';
           localStorage.removeItem('searchValue');
           closeButton.classList.remove('settings__search-close--active');
-          this.filterOnPage(wrapperCallback, callbacks, currentData, mySort.value, element.value);
+          this.generateFilteredDataOnPage(wrapperCallback, callbacks, currentData, sort.value, element.value);
         });
         break;
       }
@@ -174,15 +189,21 @@ class Filters {
             });
             const quantityRange = State.elements.get('quantityRange');
             const yearsRange = State.elements.get('yearsRange');
+            if (!(quantityRange instanceof HTMLDivElement) || !(yearsRange instanceof HTMLDivElement)) {
+              throw new Error('Range is not instance of HTMLDivElement');
+            }
+            const setDefaultValue = (range: target, value: number[]) => {
+              range.noUiSlider?.set(value);
+            };
 
-            (quantityRange as target).noUiSlider?.set([0, 20]);
-            (yearsRange as target).noUiSlider?.set([2006, 2022]);
+            setDefaultValue(quantityRange, [0, 20]);
+            setDefaultValue(yearsRange, [2006, 2022]);
           }
           if (args.targetType === ParamsType.resetSettings) {
             localStorage.clear();
             window.location.reload();
           }
-          this.filterOnPage(wrapperCallback, callbacks, currentData, mySort.value, mySearch.value);
+          this.generateFilteredDataOnPage(wrapperCallback, callbacks, currentData, sort.value, search.value);
         });
         break;
       }
@@ -190,7 +211,7 @@ class Filters {
     }
   }
 
-  protected filterOnPage(
+  protected generateFilteredDataOnPage(
     generateProduct: (callbacks: ICallbacks, data: IProduct[]) => HTMLElement,
     callbacks: ICallbacks,
     data: IProduct[],
@@ -235,7 +256,7 @@ class Filters {
       closeButton.classList.remove('settings__search-close--active');
     }
     generateProduct(callbacks, filteredByAll);
-    const notFound = (searchedValue: string, arr: IProduct[]) => {
+    const generateNotFound = (searchedValue: string, arr: IProduct[]) => {
       if ((searchedValue !== '' && arr.length === 0) || arr.length === 0) {
         const products = State.elements.get('productsWrapper') as HTMLElement;
         const h2 = document.createElement('h2');
@@ -244,7 +265,7 @@ class Filters {
         products.append(h2);
       }
     };
-    notFound(searchValue, filteredByAll);
+    generateNotFound(searchValue, filteredByAll);
   }
 }
 

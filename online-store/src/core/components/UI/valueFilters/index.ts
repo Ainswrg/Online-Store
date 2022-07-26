@@ -1,20 +1,23 @@
+import { TListenersElements } from '@core/ts/types';
 import State from '@core/state';
 import Component from '@core/templates/component';
 
 class ValueFilters extends Component {
   static inputs: HTMLInputElement[] = [];
-  enableListeners(arr: (HTMLInputElement | HTMLLabelElement)[][]): void {
-    const addEListener = (inputElement: Element, labelElement: Element): void => {
-      inputElement.addEventListener('change', () => {
-        const myTarget = inputElement as HTMLInputElement;
-        if (myTarget.checked) {
-          labelElement.classList.add('active');
-          localStorage.setItem(`${myTarget.value}-btn`, 'true');
-        } else {
-          labelElement.classList.remove('active');
-          localStorage.removeItem(`${myTarget.value}-btn`);
-        }
-      });
+  enableListeners(arr: TListenersElements[][]): void {
+    const addEListener = (inputElement: TListenersElements, labelElement: TListenersElements): void => {
+      if (inputElement instanceof HTMLInputElement && labelElement instanceof HTMLLabelElement) {
+        inputElement.addEventListener('change', () => {
+          const myTarget = inputElement;
+          if (myTarget.checked) {
+            labelElement.classList.add('active');
+            localStorage.setItem(`${myTarget.value}-btn`, 'true');
+          } else {
+            labelElement.classList.remove('active');
+            localStorage.removeItem(`${myTarget.value}-btn`);
+          }
+        });
+      }
     };
     arr.forEach(([input, label]) => {
       addEListener(input, label);
@@ -108,7 +111,7 @@ class ValueFilters extends Component {
     this.container.append(title, category, genres, status, popular);
 
     //  add event listeners
-    const listeners = [
+    const listeners: TListenersElements[][] = [
       [inputMarvel, labelMarvel],
       [inputDC, labelDC],
       [inputOther, labelOther],
@@ -119,7 +122,7 @@ class ValueFilters extends Component {
       [inputCompleted, labelCompleted],
       [inputPopular, labelPopular],
     ];
-    const inputs = [
+    const inputs: (string | TListenersElements)[][] = [
       ['inputMarvel', inputMarvel],
       ['inputDC', inputDC],
       ['inputOther', inputOther],
@@ -131,9 +134,13 @@ class ValueFilters extends Component {
       ['inputPopular', inputPopular],
     ];
     inputs.forEach((input) => {
-      State.addToElements(input[0] as string, input[1] as HTMLInputElement);
+      if (input[0]) {
+        if (input[1] instanceof HTMLInputElement) {
+          State.addToElements(input[0].toString(), input[1]);
+        }
+      }
     });
-    State.addToElements('listeners', listeners as HTMLInputElement[][]);
+    State.addToElements('listeners', listeners);
     this.enableListeners(listeners);
   }
 

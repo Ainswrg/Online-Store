@@ -1,5 +1,5 @@
 import { ParamsType } from '@core/ts/enum';
-import { IProduct, IFiltersType } from '@core/ts/interfaces';
+import { IProduct, IFiltersType, IResult } from '@core/ts/interfaces';
 
 class Filter {
   filterData(data: IProduct[], filtersType: IFiltersType[]): IProduct[] {
@@ -10,10 +10,11 @@ class Filter {
     const resQuantity: IProduct[] = [];
     const resYears: IProduct[] = [];
 
-    const sortedTypes = filtersType.sort((a: IFiltersType, b: IFiltersType) => Number(a.id) - Number(b.id));
-    sortedTypes.forEach((filters) => {
-      const quantityOrArr = resQuantity.length === 0 ? data : resQuantity;
-      const yearsOrQuantity = resYears.length === 0 ? quantityOrArr : resYears;
+    const sortedFiltersType = filtersType.sort((a: IFiltersType, b: IFiltersType) => Number(a.id) - Number(b.id));
+
+    sortedFiltersType.forEach((filters) => {
+      const quantityOrData = resQuantity.length === 0 ? data : resQuantity;
+      const yearsOrQuantity = resYears.length === 0 ? quantityOrData : resYears;
       const categoryOrYears = resCategory.length === 0 ? yearsOrQuantity : resCategory;
       const genresOrCategory = resGenres.length === 0 ? categoryOrYears : resGenres;
       const statusOrGenres = resStatus.length === 0 ? genresOrCategory : resStatus;
@@ -27,10 +28,10 @@ class Filter {
         case ParamsType.year: {
           const [first, second] = filters.value.split(',');
           resYears.push(
-            ...quantityOrArr.filter(
+            ...quantityOrData.filter(
               (item) =>
-                new Date(item.year) >= new Date(Number(first), 1, 1) &&
-                new Date(item.year) <= new Date(Number(second), 12, 31)
+                new Date(item.year) >= new Date(Number(first), 0, 1) &&
+                new Date(item.year) <= new Date(Number(second), 11, 31)
             )
           );
           break;
@@ -51,52 +52,68 @@ class Filter {
       }
     });
 
-    const haveId = (id: number) => filtersType.some((el) => el.id === id);
-    const haveIdAndNotEmpty = (id: number, arr: IProduct[]) => {
-      if (haveId(id)) {
-        return arr.length !== 0;
-      }
-      return true;
+    const allRes: IResult = {
+      data,
+      resQuantity,
+      resYears,
+      resCategory,
+      resGenres,
+      resStatus,
+      resPopular,
     };
 
+    const resultData = this.filterInOneResultArray(allRes, filtersType);
+
+    return resultData;
+  }
+  haveId = (id: number, filters: IFiltersType[]) => filters.some((el) => el.id === id);
+  haveIdAndNotEmpty = (id: number, arr: IProduct[], filters: IFiltersType[]) => {
+    if (this.haveId(id, filters)) {
+      return arr.length !== 0;
+    }
+    return true;
+  };
+  filterInOneResultArray(arr: IResult, filters: IFiltersType[]) {
     let res: IProduct[] = [];
     if (
-      haveId(6) &&
-      haveIdAndNotEmpty(1, resQuantity) &&
-      haveIdAndNotEmpty(2, resYears) &&
-      haveIdAndNotEmpty(3, resCategory) &&
-      haveIdAndNotEmpty(4, resGenres) &&
-      haveIdAndNotEmpty(5, resStatus)
+      this.haveId(6, filters) &&
+      this.haveIdAndNotEmpty(1, arr.resQuantity, filters) &&
+      this.haveIdAndNotEmpty(2, arr.resYears, filters) &&
+      this.haveIdAndNotEmpty(3, arr.resCategory, filters) &&
+      this.haveIdAndNotEmpty(4, arr.resGenres, filters) &&
+      this.haveIdAndNotEmpty(5, arr.resStatus, filters)
     ) {
-      res = resPopular;
+      res = arr.resPopular;
     } else if (
-      haveId(5) &&
-      haveIdAndNotEmpty(1, resQuantity) &&
-      haveIdAndNotEmpty(2, resYears) &&
-      haveIdAndNotEmpty(3, resCategory) &&
-      haveIdAndNotEmpty(4, resGenres)
+      this.haveId(5, filters) &&
+      this.haveIdAndNotEmpty(1, arr.resQuantity, filters) &&
+      this.haveIdAndNotEmpty(2, arr.resYears, filters) &&
+      this.haveIdAndNotEmpty(3, arr.resCategory, filters) &&
+      this.haveIdAndNotEmpty(4, arr.resGenres, filters)
     ) {
-      res = resStatus;
+      res = arr.resStatus;
     } else if (
-      haveId(4) &&
-      haveIdAndNotEmpty(1, resQuantity) &&
-      haveIdAndNotEmpty(2, resYears) &&
-      haveIdAndNotEmpty(3, resCategory)
+      this.haveId(4, filters) &&
+      this.haveIdAndNotEmpty(1, arr.resQuantity, filters) &&
+      this.haveIdAndNotEmpty(2, arr.resYears, filters) &&
+      this.haveIdAndNotEmpty(3, arr.resCategory, filters)
     ) {
-      res = resGenres;
-    } else if (haveId(3) && haveIdAndNotEmpty(1, resQuantity) && haveIdAndNotEmpty(2, resYears)) {
-      res = resCategory;
-    } else if (haveId(2) && haveIdAndNotEmpty(1, resQuantity)) {
-      res = resYears;
-    } else if (haveId(1)) {
-      res = resQuantity;
+      res = arr.resGenres;
+    } else if (
+      this.haveId(3, filters) &&
+      this.haveIdAndNotEmpty(1, arr.resQuantity, filters) &&
+      this.haveIdAndNotEmpty(2, arr.resYears, filters)
+    ) {
+      res = arr.resCategory;
+    } else if (this.haveId(2, filters) && this.haveIdAndNotEmpty(1, arr.resQuantity, filters)) {
+      res = arr.resYears;
+    } else if (this.haveId(1, filters)) {
+      res = arr.resQuantity;
     } else {
-      res = data;
+      res = arr.data;
     }
-
     return res;
   }
-
   filterBySearch = (searchValue: string, data: IProduct[]) => {
     if (searchValue !== '') {
       return data.filter((obj) => obj.title.toLowerCase().includes(searchValue.toLowerCase()));
