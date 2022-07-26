@@ -3,8 +3,9 @@ import Page from '@core/templates/page';
 import State from '@core/state';
 import Component from '@core/templates/component';
 import { IProduct, ICallbacks } from '@core/ts/interfaces';
-import { Settings, Product } from '@/core/components';
+import { Settings } from '@/core/components';
 import Filters from '@/core/filters';
+import { filterInputValue, addListenersOnButton, filterButtonValue, filterSelectValue } from './homeHelpers';
 
 class MainPage extends Page {
   protected data: IProduct[];
@@ -47,69 +48,8 @@ class MainPage extends Page {
     productsWrapper.classList.add('products__wrapper');
 
     State.elements.set('productsWrapper', productsWrapper);
-    const generateModal = (content: string, timeout: number) => {
-      const { body } = document;
-      const modal = new Component('div', 'modal');
-      const modalContent = new Component('div', 'modal__content');
-      const modalText = new Component('p', 'modal__text');
-      modalText.appendText(content);
-      modalContent.appendContent(modalText.render());
-      modal.appendContent(modalContent.render());
-      const render = modal.render();
-      body.append(render);
-      setTimeout(() => {
-        render.classList.add('modal--active');
-      }, 100);
-      setTimeout(() => {
-        render.classList.remove('modal--active');
-        setTimeout(() => {
-          render.remove();
-        }, timeout);
-      });
-    };
-    const span = State.elements.get('span') as HTMLElement;
 
-    data.forEach((product) => {
-      const productCart = new Product('div', 'product', product);
-      const renderCart = productCart.render();
-      productsWrapper.append(renderCart);
-      const buttonAdd = State.elements.get('buttonAdd') as HTMLButtonElement;
-      const buttonDel = State.elements.get('buttonDel') as HTMLButtonElement;
-      const counterSpan = State.elements.get('counter') as HTMLElement;
-      if (`productCart${product.id}` in localStorage) {
-        if (!State.cart.has(`productCart${product.id}`)) {
-          State.addToCart(`productCart${product.id}`, productCart);
-        }
-      }
-      buttonAdd?.addEventListener('click', () => {
-        const cartCounter: number | boolean =
-          'cartLength' in localStorage ? Number(localStorage.getItem('cartLength')) : State.cart.size;
-
-        if (cartCounter < 20) {
-          State.addToCart(`productCart${product.id}`, productCart);
-          localStorage.setItem(`productCart${product.id}`, JSON.stringify(productCart));
-          counterSpan!.innerHTML = '';
-          counterSpan!.textContent = `(1)`;
-          span.innerHTML = '';
-          span.textContent = `${State.cart.size}`;
-
-          localStorage.setItem(`counter${product.id}`, `1`);
-          localStorage.setItem(`cartLength`, JSON.stringify(State.cart.size));
-        } else {
-          generateModal('Вы не можете добавить больше 20 товаров', 700);
-        }
-      });
-      buttonDel?.addEventListener('click', () => {
-        State.cart.delete(`productCart${product.id}`);
-        localStorage.removeItem(`productCart${product.id}`);
-        counterSpan!.innerHTML = '';
-        counterSpan!.textContent = `(0)`;
-        span.innerHTML = '';
-        span.textContent = `${State.cart.size}`;
-        localStorage.removeItem(`counter${product.id}`);
-        localStorage.setItem(`cartLength`, JSON.stringify(State.cart.size));
-      });
-    });
+    addListenersOnButton(data, productsWrapper);
     return productsWrapper;
   }
 
@@ -119,117 +59,76 @@ class MainPage extends Page {
     settings.append(settingsWrap.render());
     this.container.append(settings);
   }
-  // ToDo: уменьшить код
 
   private enableAllListeners(): void {
     const filters = new Filters();
-    const search = State.elements.get('search') as HTMLInputElement;
-    const sort = State.elements.get('sort') as HTMLSelectElement;
-    const inputMarvel = State.elements.get('inputMarvel');
-    const inputDC = State.elements.get('inputDC');
-    const inputOther = State.elements.get('inputOther');
-    const inputSuperhero = State.elements.get('inputSuperhero');
-    const inputAction = State.elements.get('inputAction');
-    const inputScience = State.elements.get('inputScience');
-    const inputOngoing = State.elements.get('inputOngoing');
-    const inputCompleted = State.elements.get('inputCompleted');
-    const inputPopular = State.elements.get('inputPopular');
-    const quantity = State.elements.get('quantityRange');
-    const year = State.elements.get('yearsRange');
-    const buttonResetFilters = State.elements.get('buttonResetFilters');
-    const buttonResetSettings = State.elements.get('buttonResetSettings');
+    const search = State.elements.get('search');
+    const sort = State.elements.get('sort');
 
-    const filterValue = [
-      {
-        type: 'sort',
-        input: sort,
-        value: '',
-      },
-      {
-        type: 'search',
-        input: search,
-        value: '',
-      },
-      {
-        type: 'category',
-        input: inputMarvel,
-        value: 'marvel',
-      },
-      {
-        type: 'category',
-        input: inputDC,
-        value: 'dc',
-      },
-      {
-        type: 'category',
-        input: inputOther,
-        value: 'other',
-      },
-      {
-        type: 'genres',
-        input: inputSuperhero,
-        value: 'superhero',
-      },
-      {
-        type: 'genres',
-        input: inputAction,
-        value: 'action',
-      },
-      {
-        type: 'genres',
-        input: inputScience,
-        value: 'sci-fi',
-      },
-      {
-        type: 'status',
-        input: inputOngoing,
-        value: 'ongoing',
-      },
-      {
-        type: 'status',
-        input: inputCompleted,
-        value: 'completed',
-      },
-      {
-        type: 'rating',
-        input: inputPopular,
-        value: 'rating',
-      },
-      {
-        type: 'quantity',
-        input: quantity,
-        value: '',
-      },
-      {
-        type: 'year',
-        input: year,
-        value: '',
-      },
-      {
-        type: 'resetFilters',
-        input: buttonResetFilters,
-        value: '',
-      },
-      {
-        type: 'resetSettings',
-        input: buttonResetSettings,
-        value: '',
-      },
-    ];
-    filterValue.forEach((item) => {
-      filters.enableFiltersListener(
-        {
-          element: item.input as HTMLInputElement,
-          data: this.data,
-          targetType: item.type,
-          value: item.value,
-        },
-        { wrapper: this.products, container: this.container, product: this.generateProduct },
-        this.generateProductWrapper,
-        sort,
-        search
-      );
-    });
+    if (!(search instanceof HTMLInputElement) || !(sort instanceof HTMLSelectElement)) {
+      throw new Error('Search or Sort has wrong type of element');
+    } else {
+      filterInputValue.forEach((item) => {
+        if (State.elements.has(item.input)) {
+          const inputElement = State.elements.get(item.input);
+          if (!(inputElement instanceof HTMLInputElement)) {
+            throw new Error('InputElement has wrong type of element');
+          }
+          filters.enableFiltersListener(
+            {
+              element: inputElement,
+              data: this.data,
+              targetType: item.type,
+              value: item.value,
+            },
+            { wrapper: this.products, container: this.container, product: this.generateProduct },
+            this.generateProductWrapper,
+            sort,
+            search
+          );
+        }
+      });
+      filterButtonValue.forEach((item) => {
+        if (State.elements.has(item.input)) {
+          const buttonElement = State.elements.get(item.input);
+          if (!(buttonElement instanceof HTMLButtonElement)) {
+            throw new Error('buttonElement has wrong type of element');
+          }
+          filters.enableFiltersListener(
+            {
+              element: buttonElement,
+              data: this.data,
+              targetType: item.type,
+              value: item.value,
+            },
+            { wrapper: this.products, container: this.container, product: this.generateProduct },
+            this.generateProductWrapper,
+            sort,
+            search
+          );
+        }
+      });
+      filterSelectValue.forEach((item) => {
+        if (State.elements.has(item.input)) {
+          const selectElement = State.elements.get(item.input);
+          if (!(selectElement instanceof HTMLSelectElement)) {
+            throw new Error('selectElement has wrong type of element');
+          }
+          filters.enableFiltersListener(
+            {
+              element: selectElement,
+              data: this.data,
+              targetType: item.type,
+              value: item.value,
+            },
+            { wrapper: this.products, container: this.container, product: this.generateProduct },
+            this.generateProductWrapper,
+            sort,
+            search
+          );
+        }
+      });
+    }
   }
 
   protected checkButtons(elements: HTMLInputElement[][]) {
