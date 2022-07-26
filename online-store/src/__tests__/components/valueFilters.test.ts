@@ -19,12 +19,27 @@ describe('ValueFilters', () => {
     const createLabel = instance.createLabel('label');
     expect(createLabel.nodeType).toBeDefined();
   });
-  it('createInput should be defined', () => {
+  it('createInput should be equal', () => {
     const createInput = instance.createInput('marvel', 'category');
-    expect(createInput).toBeDefined();
+    const input = document.createElement('input');
+    input.type = 'checkbox';
+    input.classList.add('settings__input');
+    input.name = 'category';
+    input.value = 'marvel';
+    expect(createInput).toEqual(input);
   });
   it('render should be defined', () => {
     const render = instance.render();
     expect(render).toBeDefined();
+  });
+
+  it('spyOn .toBeCalled', () => {
+    const spy = jest.spyOn(instance, 'enableListeners');
+    const inputMarvel = instance.createInput('marvel', 'category');
+    const labelMarvel = instance.createLabel('Marvel');
+    const listeners = [[inputMarvel, labelMarvel]];
+
+    instance.enableListeners(listeners);
+    expect(spy).toBeCalled();
   });
 });
