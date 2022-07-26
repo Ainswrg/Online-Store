@@ -4,7 +4,7 @@ import { TListenersElements } from '@core/ts/types';
 
 class State {
   static cart: Map<string, Product | HTMLElement> = new Map();
-  static elements: Map<string, TListenersElements | HTMLInputElement[][]> = new Map();
+  static elements: Map<string, string | TListenersElements | TListenersElements[][]> = new Map();
   static filters: IFiltersType[] = [];
 
   static addToCart(name: string, element: Product | HTMLElement): void {
@@ -16,14 +16,14 @@ class State {
   static getCart(): Map<string, Product | HTMLElement> {
     return State.cart;
   }
-  static addToElements(name: string, element: TListenersElements | HTMLInputElement[][]): void {
+  static addToElements(name: string, element: TListenersElements | TListenersElements[][]): void {
     State.elements.set(name, element);
   }
-  static getElements(): Map<string, TListenersElements | HTMLInputElement[][]> {
+  static getElements(): Map<string, string | TListenersElements | TListenersElements[][]> {
     return State.elements;
   }
   static addToFilters(filter: IFiltersType): void {
-    this.filters?.push(filter);
+    this.filters.push(filter);
   }
   static getFilters(): IFiltersType[] {
     return this.filters;
