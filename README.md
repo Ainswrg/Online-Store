@@ -1,7 +1,7 @@
 # Online Store
 ## [A link to deployed application is here](https://rolling-scopes-school.github.io/ainswrg-JSFE2022Q1/online-store/)
 ## Stack
-   - JS
+   - TypeScript
    - SASS
    - Webpack
 ## Skills
