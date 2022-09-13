@@ -1,0 +1,269 @@
+.settings {
+  width: 100%;
+  height: fit-content;
+  margin: 50px 0;
+  &__title {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  &__wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-column-gap: 11px;
+    @media (max-width: 1000px) {
+      grid-template-columns: 1fr;
+    }
+  }
+  &__filters {
+    border: 2px solid $filterTitle;
+  }
+  @each $name in $settingsValue {
+    &__#{$name} {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      gap: 10px 20px;
+      align-items: center;
+      padding: 5px 10px;
+    }
+  }
+  &__subtitle {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: $filterTitle;
+  }
+  &__label {
+    font-size: 0.6rem;
+    font-weight: bold;
+    color: $filterTitle;
+    width: 50px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10%;
+    text-align: center;
+    background-color: $labelBackground;
+    cursor: pointer;
+    &.active {
+      background-color: $labelBackgroundActive;
+      color: $labelActive;
+    }
+  }
+  &__input {
+    display: none;
+  }
+  &__search {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 15px 0px;
+    &-wrapper {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      width: 80%;
+      margin: 0 auto;
+      height: fit-content;
+      position: relative;
+    }
+    &-title {
+      display: none;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: $filterTitle;
+    }
+    &-input {
+      width: 100%;
+      margin: 0 auto;
+      height: 40px;
+      border-radius: 0.25em;
+      border: 2px solid $filterTitle;
+      padding: 0 10px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: $filterTitle;
+      position: relative;
+    }
+    &-close {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid $filterTitle;
+      background-color: $labelBackground;
+      z-index: 2;
+      cursor: pointer;
+      display: none;
+      &:hover {
+        background-color: $labelBackgroundActive;
+        color: $labelBackground;
+      }
+      &--active {
+        display: block;
+      }
+    }
+  }
+  &__sort {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    width: 80%;
+    height: 3em;
+    border-radius: 0.25em;
+    overflow: hidden;
+    margin: 0 auto;
+    position: relative;
+    &::-ms-expand {
+      display: none;
+    }
+    &::after {
+      content: '\25BC';
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 1em;
+      background-color: #34495e;
+      transition: 0.25s all ease;
+      pointer-events: none;
+    }
+    &:hover::after {
+      color: #f39c12;
+    }
+    &-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: $filterTitle;
+      display: flex;
+      width: 40%;
+      height: 3em;
+      background-color: #2c3e50;
+      flex-direction: column;
+      justify-content: center;
+      align-self: center;
+      padding-left: 1rem;
+      @media (max-width: 1440px) {
+        display: none;
+      }
+    }
+    &-select {
+      appearance: none;
+      outline: 0;
+      border: 0;
+      font-size: 0.9rem;
+      box-shadow: none;
+      flex: 1;
+      padding: 0 1em;
+      color: #fff;
+      background-color: $darkgray;
+      background-image: none;
+      cursor: pointer;
+      &:hover {
+        background-color: $gray;
+      }
+    }
+  }
+  &__buttons {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 2rem auto;
+
+  }
+  &__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 9rem;
+    height: 4rem;
+    border-radius: 0.25em;
+    background-color: $buttonBackground;
+    color: $buttonColor;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    &:hover {
+      background-color: $buttonBackgroundHover;
+      color: $buttonColorHover;
+    }
+  }
+}
+
+.range {
+  padding: 5px 15px;
+
+  &__subtitle {
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  &__slider {
+    margin-bottom: 14px;
+  }
+  &__values {
+    display: flex;
+    gap: 10px;
+  }
+  &__input {
+    width: 100%;
+    border: none;
+    height: 28px;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-size: 18px;
+    color: #fff;
+  }
+  &__input:nth-child(1) {
+    background: $primary;
+  }
+  &__input:nth-child(2) {
+    background: $secondary;
+  }
+  &__input:focus {
+    outline: none;
+  }
+  .noUi {
+    &-connect {
+      background: linear-gradient(90deg, $primary 0%, $secondary 100%);
+    }
+    &-target {
+      box-shadow: 0 0 4px $primary;
+      border: none;
+      background: #111;
+    }
+    &-handle {
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.24);
+      border: none;
+      border-radius: 50%;
+      background: #111;
+      cursor: e-resize;
+    }
+    &-handle:before,
+    &-handle:after {
+      display: none;
+    }
+    &-handle-lower {
+      background: $primary;
+      box-shadow: 0 0 16px $primary;
+    }
+    &-handle-upper {
+      background: $secondary;
+      box-shadow: 0 0 16px $secondary;
+    }
+    &-horizontal {
+      height: 13px;
+      cursor: pointer;
+    }
+    &-horizontal .noUi-handle {
+      width: 24px;
+      height: 24px;
+      right: -12px;
+    }
+  }
+}
